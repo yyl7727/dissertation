@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xml:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑用户</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+
+        </div>
+        <form class="form-row" th:action="@{/saveuser}" th:object="${user}" method="POST">
+            <div class="form-group">
+                <label for="account">账   号：</label>
+                <input class="form-control" th:field="*{account}" required placeholder="请输入账号">
+            </div>
+            <div class="form-group">
+                <label for="password">密    码：</label>
+                <input class="form-control" type="password" th:field="*{password}" required placeholder="请输入密码">
+            </div>
+            <div class="form-group">
+                <label for="name">姓    名：</label>
+                <input type="text" th:field="*{name}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="name">联系电话：</label>
+                <input type="text" th:field="*{mobile}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="name">电子邮件：</label>
+                <input type="text" th:field="*{email}" class="form-control">
+
+                <input type="hidden" th:field="*{validstate}">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">保   存</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

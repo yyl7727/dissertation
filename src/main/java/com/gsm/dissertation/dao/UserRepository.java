@@ -14,7 +14,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
      * @param pageable 分页
      * @return 查询到的信息
      */
-    @Query("select u from Users u where u.account like ?1 or u.name like ?2")
+    @Query("select u from Users u where u.account like ?1 or u.name like ?1")
     Page<Users> findByKeyword(String kw,Pageable pageable);
 
     @Query("update Users u set u.password = ?1 where u.uid = ?2")

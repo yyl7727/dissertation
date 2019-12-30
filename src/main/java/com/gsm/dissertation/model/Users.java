@@ -20,7 +20,7 @@ public class Users {
     /**
      * 账号
      */
-    @Column(length = 30)
+    @Column(length = 30,unique = true)
     @NotNull
     private String account;
 
@@ -73,8 +73,9 @@ public class Users {
 
     /**
      * 是否有效
+     * 0:无效   1：有效
      */
-    private Integer validstate;
+    private Integer validstate = 1;
 
     public Integer getUid() {
         return uid;

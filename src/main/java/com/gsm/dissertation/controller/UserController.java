@@ -2,6 +2,7 @@ package com.gsm.dissertation.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.gsm.dissertation.model.UserLogin;
 import com.gsm.dissertation.model.Users;
 import com.gsm.dissertation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +36,11 @@ public class UserController {
      */
     @RequestMapping("/listusers")
     public String list(String kw, Model model, Pageable pageable){
+        if (kw != null){
+            kw="%" + kw + "%";
+        }else{
+            kw="%%";
+        }
         Page<Users> pageUser = userService.findAll(kw,pageable);
 
         model.addAttribute("pages",pageUser);
@@ -53,26 +58,36 @@ public class UserController {
     }
 
     @PostMapping("/saveuser")
-    public String save(@Valid Users user, BindingResult result){
+    public String save(@Valid Users user, BindingResult result, RedirectAttributes attr){
         try {
             if (result.hasErrors()){
                 return "redirect:/edituser";
             }
             userService.save(user);
+            attr.addFlashAttribute("ok","保存成功");
             return "redirect:/listusers";
         }catch (Exception ex){
+            attr.addFlashAttribute("err","保存失败" + ex.toString());
             return "redirect:/edituser";
         }
     }
 
-    @GetMapping("/delete/{uid}")
+    @GetMapping("/deleteuser/{uid}")
     public String delete(@PathVariable("uid") Integer uid){
         userService.deleteById(uid);
         return "redirect:/listusers";
     }
 
-    @GetMapping("/deletes{uids}")
-    public String deletes(@PathVariable("uids") String uids){
+
+    /**
+     * 批量删除用户
+     * 目前存在问题删除后不能刷新页面
+     * 等待以后解决问题
+     * @param uids
+     * @return
+     */
+    @PostMapping("/deleteusers")
+    public String deletes(@RequestBody String uids){
         List<Users> usersList = new ArrayList<>();
         JSONObject jsonObject = JSONObject.parseObject(uids);
         JSONArray jsonArray = jsonObject.getJSONArray("uids");//前端传递时使用uids作为json的键
@@ -94,5 +109,25 @@ public class UserController {
         Users user = userService.findById(uid);
         user.setValidstate(1 - user.getValidstate());
         return "redirect:/listusers";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@Valid UserLogin user,
+                        BindingResult result, HttpSession session, Model model){
+        if (result.hasErrors()){
+            return "redirect:/login";
+        }
+        Users u = userService.checkUser(user);
+        if (u != null){
+            session.setAttribute("user",u);
+            return "index";
+        }
+        model.addAttribute("fail","登录失败");
+        return "redirect:/login";
     }
 }

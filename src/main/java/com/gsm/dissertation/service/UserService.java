@@ -1,5 +1,6 @@
 package com.gsm.dissertation.service;
 
+import com.gsm.dissertation.model.UserLogin;
 import com.gsm.dissertation.model.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,4 +20,6 @@ public interface UserService {
     void deleteById(Integer uid);
 
     void deletes(List<Users> usersList);
+
+    Users checkUser(UserLogin user);
 }

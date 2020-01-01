@@ -1,6 +1,7 @@
 package com.gsm.dissertation.service;
 
 import com.gsm.dissertation.dao.UserRepository;
+import com.gsm.dissertation.model.UserLogin;
 import com.gsm.dissertation.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -50,5 +52,23 @@ public class UserServiceImpl implements UserService {
         for(Users user : usersList){
             userRepository.delete(user);
         }
+    }
+
+    /**
+     * 检测登录用户是否存在
+     * @param user 登录实体包含用户名和密码
+     * @return True：用户存在  False：不存在
+     */
+    @Override
+    public Users checkUser(UserLogin user) {
+        Users u = null;
+        Optional<Users> ou = userRepository.findByAccount(user.getAccount());
+        if (ou.isPresent()){
+            u = ou.get();
+            if(u.getPassword().equals(user.getPassword())){
+                return u;
+            }
+        }
+        return null;
     }
 }

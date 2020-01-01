@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xml:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>编辑用户</title>
@@ -8,16 +8,21 @@
     <script th:src="@{/js/bootstrap.min.js}"></script>
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-
+            <h5>编辑用户</h5>
+        </div>
+        <div class="row" th:unless="${#strings.isEmpty(err)}">
+            <p class="alert alert-danger" th:text="${err}"></p>
         </div>
         <form class="form-row" th:action="@{/saveuser}" th:object="${user}" method="POST">
             <div class="form-group">
                 <label for="account">账   号：</label>
+                <input type="hidden" th:field="*{uid}">
+                <input th:if="*{uid != null && uid > 0}" type="hidden" th:field="*{password}">
                 <input class="form-control" th:field="*{account}" required placeholder="请输入账号">
             </div>
-            <div class="form-group">
+            <div class="form-group" th:unless="*{uid != null && uid > 0}">
                 <label for="password">密    码：</label>
                 <input class="form-control" type="password" th:field="*{password}" required placeholder="请输入密码">
             </div>
@@ -27,11 +32,11 @@
             </div>
             <div class="form-group">
                 <label for="name">联系电话：</label>
-                <input type="text" th:field="*{mobile}" class="form-control">
+                <input type="text" maxlength="11" th:field="*{mobile}" class="form-control">
             </div>
             <div class="form-group">
                 <label for="name">电子邮件：</label>
-                <input type="text" th:field="*{email}" class="form-control">
+                <input type="email" th:field="*{email}" class="form-control">
 
                 <input type="hidden" th:field="*{validstate}">
             </div>

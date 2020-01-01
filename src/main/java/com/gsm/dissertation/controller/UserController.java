@@ -116,6 +116,14 @@ public class UserController {
         return "login";
     }
 
+    /**
+     * 登录
+     * @param user
+     * @param result
+     * @param session
+     * @param model
+     * @return
+     */
     @PostMapping("/login")
     public String login(@Valid UserLogin user,
                         BindingResult result, HttpSession session, Model model){

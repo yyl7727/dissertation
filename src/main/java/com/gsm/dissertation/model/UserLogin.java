@@ -3,10 +3,10 @@ package com.gsm.dissertation.model;
 import javax.validation.constraints.NotNull;
 
 public class UserLogin {
-    @NotNull
+    @NotNull(message = "账号不能为空")
     private String account;
 
-    @NotNull
+    @NotNull(message = "密码不能为空")
     private String password;
 
     public String getAccount() {

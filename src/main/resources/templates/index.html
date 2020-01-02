@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <style>
+        #myframe{
+            width: 100%;
+            height: 800px;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <p class="col col-6">论文管理系统</p>
+            <p class="col col-6">欢迎<span th:text="${#session.getAttribute('user').account}"></span></p>
+        </div>
+        <div class="row">
+            <div class="col col-2">
+                <nav>
+                    <ul>
+                        <li><a th:href="@{/edituser}" target="myframe">用户添加</a></li>
+                        <li><a th:href="@{/listusers}" target="myframe">用户管理</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col col-10">
+                <iframe id="myframe" name="myframe">
+
+                </iframe>
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
+</body>
+</html>

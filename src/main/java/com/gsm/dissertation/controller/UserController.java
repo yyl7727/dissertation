@@ -112,16 +112,17 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login(Model model){
+        model.addAttribute("userLogin",new UserLogin());
         return "login";
     }
 
     /**
      * 登录
-     * @param user
-     * @param result
-     * @param session
-     * @param model
+     * @param user 用户登录实体
+     * @param result 检查登录实体是否合法
+     * @param session session保存登录信息
+     * @param model 传递登录成功与否
      * @return
      */
     @PostMapping("/login")

@@ -12,8 +12,8 @@
     <div class="row">
         <h5>登录</h5>
     </div>
-    <div class="row" th:unless="${#strings.isEmpty(err)}">
-        <p class="alert alert-danger" th:text="${err}"></p>
+    <div class="row" th:unless="${#strings.isEmpty(fail)}">
+        <p class="alert alert-danger" th:text="${fail}"></p>
     </div>
     <form class="form-row" th:action="@{/login}" th:object="${userLogin}" method="POST">
         <div class="col col-12">

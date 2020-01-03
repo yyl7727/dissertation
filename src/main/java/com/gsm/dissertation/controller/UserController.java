@@ -127,7 +127,7 @@ public class UserController {
      */
     @PostMapping("/login")
     public String login(@Valid UserLogin user,
-                        BindingResult result, HttpSession session, Model model){
+                        BindingResult result, HttpSession session, RedirectAttributes attr){
         if (result.hasErrors()){
             return "redirect:/login";
         }
@@ -135,8 +135,9 @@ public class UserController {
         if (u != null){
             session.setAttribute("user",u);
             return "index";
+        }else {
+            attr.addFlashAttribute("fail","登录失败");
         }
-        model.addAttribute("fail","登录失败");
         return "redirect:/login";
     }
 }

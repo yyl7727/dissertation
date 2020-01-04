@@ -1,6 +1,7 @@
 package com.gsm.dissertation.service;
 
 import com.gsm.dissertation.dao.UserRepository;
+import com.gsm.dissertation.model.Teacher;
 import com.gsm.dissertation.model.UserLogin;
 import com.gsm.dissertation.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,19 +57,27 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 检测登录用户是否存在
-     * @param user 登录实体包含用户名和密码
-     * @return True：用户存在  False：不存在
+     * @param userLogin 登录实体包含用户名和密码
+     * @return 登录返回信息 返回0时验证通过。
      */
     @Override
-    public Users checkUser(UserLogin user) {
+    public String checkUser(UserLogin userLogin) {
         Users u = null;
-        Optional<Users> ou = userRepository.findByAccount(user.getAccount());
+        Optional<Users> ou = userRepository.findByAccount(userLogin.getAccount());
         if (ou.isPresent()){
             u = ou.get();
-            if(u.getPassword().equals(user.getPassword())){
-                return u;
+            if(u.getPassword().equals(userLogin.getPassword())){
+                return "0";
+            }else {
+                return "密码错误";
             }
+        }else{
+            return "用户不存在";
         }
-        return null;
+    }
+
+    @Override
+    public String checkTeacher(UserLogin userLogin) {
+        return "null";
     }
 }

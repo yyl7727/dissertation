@@ -2,8 +2,11 @@ package com.gsm.dissertation.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.gsm.dissertation.model.Parameter;
+import com.gsm.dissertation.model.Teacher;
 import com.gsm.dissertation.model.UserLogin;
 import com.gsm.dissertation.model.Users;
+import com.gsm.dissertation.service.ParameterService;
 import com.gsm.dissertation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -26,6 +30,16 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ParameterService parameterService;
+
+    //登录类型常量
+    private final String TYPESTUDENT = "0001";
+    private final String TYPETEACHER = "0002";
+    private final String TYPEADMIN = "0003";
+
+
 
     /**
      * 根据条件查询用户信息
@@ -114,30 +128,41 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model){
         model.addAttribute("userLogin",new UserLogin());
+        List<Parameter> list_Parameter = parameterService.getParameterByType("0001");
+        model.addAttribute("loginType",list_Parameter);
         return "login";
     }
 
     /**
      * 登录
-     * @param user 用户登录实体
+     * @param userLogin 用户登录实体
      * @param result 检查登录实体是否合法
      * @param session session保存登录信息
-     * @param model 传递登录成功与否
+     * @param attr 传递登录成功与否
      * @return
      */
     @PostMapping("/login")
-    public String login(@Valid UserLogin user,
+    public String login(@Valid UserLogin userLogin,
                         BindingResult result, HttpSession session, RedirectAttributes attr){
         if (result.hasErrors()){
             return "redirect:/login";
         }
-        Users u = userService.checkUser(user);
-        if (u != null){
-            session.setAttribute("user",u);
-            return "index";
-        }else {
+        Users u = null;
+        Teacher teacher = null;
+        if (userLogin.getType().equals(TYPESTUDENT)){
+            if(userService.checkUser(userLogin).equals("0")) {
+                session.setAttribute("user",u);
+                //跳转到学生登录首页
+                return "stumain";
+            }
+        }else if(userLogin.getType().equals(TYPETEACHER)){
+            session.setAttribute("user",teacher);
+            //跳转到教师主页
+            return "techmain";
+        }else{
             attr.addFlashAttribute("fail","登录失败");
         }
+        //TODO 管理员
         return "redirect:/login";
     }
 }

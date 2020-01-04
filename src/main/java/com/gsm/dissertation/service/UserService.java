@@ -1,5 +1,6 @@
 package com.gsm.dissertation.service;
 
+import com.gsm.dissertation.model.Teacher;
 import com.gsm.dissertation.model.UserLogin;
 import com.gsm.dissertation.model.Users;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface UserService {
+
     void save(Users users) throws Exception;
 
     Page<Users> findAll(String kw, Pageable pageable);
@@ -21,5 +23,7 @@ public interface UserService {
 
     void deletes(List<Users> usersList);
 
-    Users checkUser(UserLogin user);
+    String checkUser(UserLogin userLogin);
+
+    String checkTeacher(UserLogin userLogin);
 }

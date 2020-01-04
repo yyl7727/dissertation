@@ -9,6 +9,9 @@ public class UserLogin {
     @NotNull(message = "密码不能为空")
     private String password;
 
+    @NotNull(message = "登录类型不能为空")
+    private String type;
+
     public String getAccount() {
         return account;
     }
@@ -24,4 +27,8 @@ public class UserLogin {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getType() { return type; }
+
+    public void setType(String type) { this.type = type; }
 }

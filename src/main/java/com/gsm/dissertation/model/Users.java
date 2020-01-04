@@ -81,9 +81,7 @@ public class Users {
         return uid;
     }
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
+    public void setUid(Integer uid) { this.uid = uid; }
 
     public String getAccount() {
         return account;

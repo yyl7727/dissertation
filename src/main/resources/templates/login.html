@@ -1,35 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
     <title>登录</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<div class="container">
-    <div class="row">
-        <h5>登录</h5>
-    </div>
-    <div class="row" th:unless="${#strings.isEmpty(fail)}">
-        <p class="alert alert-danger" th:text="${fail}"></p>
-    </div>
-    <form class="form-row" th:action="@{/login}" th:object="${userLogin}" method="POST">
-        <div class="col col-12">
-            <div class="row form-group">
-                <label for="account">账   号：</label>
-                <input class="form-control" th:field="*{account}" required placeholder="请输入账号">
-            </div>
-            <div class="row form-group">
-                <label for="password">密    码：</label>
-                <input class="form-control" type="password" th:field="*{password}" required placeholder="请输入密码">
-            </div>
-            <div class="row form-group">
-                <button type="submit" class="btn btn-primary">登    录</button>
+
+<body class="header-fix fix-sidebar">
+    <!-- Main wrapper  -->
+    <div id="main-wrapper">
+        <div class="unix-login">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4">
+                        <div class="login-content card">
+                            <div class="login-form">
+                                <h4>登录</h4>
+                                <form th:action="@{/login}" th:object="${userLogin}" method="POST">
+                                    <div class="form-group">
+                                        <label>用户名</label>
+                                        <input  class="form-control" th:field="*{account}" placeholder="请输入用户名">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>密码</label>
+                                        <input type="password" class="form-control" th:field="*{password}" placeholder="请输入密码">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>登录类型</label>
+                                        <select class="form-control" th:field="*{type}">
+                                            <option th:each="type:${loginType}" th:value="${type.getPara_code()}" th:text="${type.getPara_value()}"></option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="pull-right">
+                                            <a href="#">忘记密码？</a>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">登录</button>
+                                    <div class="register-link m-t-15 text-center">
+                                        <p>没有账号 ？ <a href="#">现在注册</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </form>
-</div>
+    </div>
+    <!-- End Wrapper -->
+    <!-- All Jquery -->
+    <script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script th:src="@{/js/jquery.slimscroll.js}"></script>
+    <!--Menu sidebar -->
+    <script th:src="@{/js/sidebarmenu.js}"></script>
+    <!--stickey kit -->
+    <script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+    <!--Custom JavaScript -->
+    <script th:src="@{/js/custom.min.js}"></script>
 </body>
 </html>

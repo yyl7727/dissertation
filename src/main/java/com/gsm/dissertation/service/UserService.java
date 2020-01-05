@@ -25,5 +25,7 @@ public interface UserService {
 
     String checkUser(UserLogin userLogin);
 
+    Teacher findTeacherByAccount(String account);
+
     String checkTeacher(UserLogin userLogin);
 }

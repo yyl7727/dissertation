@@ -2,10 +2,8 @@ package com.gsm.dissertation.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.gsm.dissertation.model.Parameter;
-import com.gsm.dissertation.model.Teacher;
-import com.gsm.dissertation.model.UserLogin;
-import com.gsm.dissertation.model.Users;
+import com.gsm.dissertation.model.*;
+import com.gsm.dissertation.service.GuideTeacherService;
 import com.gsm.dissertation.service.ParameterService;
 import com.gsm.dissertation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,35 +28,32 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
-
     @Autowired
     private ParameterService parameterService;
+    @Autowired
+    private GuideTeacherService guideTeacherService;
 
     //登录类型常量
+    /**
+     * 登录类型为学生
+     */
     private final String TYPESTUDENT = "0001";
+    /**
+     * 登录类型为教师
+     */
     private final String TYPETEACHER = "0002";
+    /**
+     * 登录类型为管理员
+     */
     private final String TYPEADMIN = "0003";
 
-
-
-    /**
-     * 根据条件查询用户信息
-     * @param kw 关键字
-     * @param model 模型对象，视图界面的环境对象
-     * @param pageable 分页信息对象，包含分页基本信息，如当前页码，每页条数
-     * @return
-     */
-    @RequestMapping("/listusers")
-    public String list(String kw, Model model, Pageable pageable){
-        if (kw != null){
-            kw="%" + kw + "%";
-        }else{
-            kw="%%";
-        }
-        Page<Users> pageUser = userService.findAll(kw,pageable);
-
-        model.addAttribute("pages",pageUser);
-        return "listusers";
+    @RequestMapping("/stulist")
+    public String stuList(Model model,HttpSession session){
+        //获取教师管理的学生的学号姓名以及选题状态
+        Teacher teacher = (Teacher)session.getAttribute("user");
+        List<GuideTeacher> guideTeacherList = guideTeacherService.getGuideTeacherByAccount(teacher.getAccount());
+        model.addAttribute("guideTeacherList",guideTeacherList);
+        return "stulist";
     }
 
     @GetMapping({"/edituser", "/edituser/{uid}"})
@@ -149,6 +144,8 @@ public class UserController {
         }
         Users u = null;
         Teacher teacher = null;
+
+
         if (userLogin.getType().equals(TYPESTUDENT)){
             if(userService.checkUser(userLogin).equals("0")) {
                 session.setAttribute("user",u);
@@ -156,13 +153,17 @@ public class UserController {
                 return "stumain";
             }
         }else if(userLogin.getType().equals(TYPETEACHER)){
-            session.setAttribute("user",teacher);
-            //跳转到教师主页
-            return "techmain";
+            if(userService.checkTeacher(userLogin).equals("0")){
+                teacher = userService.findTeacherByAccount(userLogin.getAccount());
+                session.setAttribute("user",teacher);
+                //跳转到教师主页
+                return "techmain";
+            }
         }else{
             attr.addFlashAttribute("fail","登录失败");
         }
         //TODO 管理员
+
         return "redirect:/login";
     }
 }

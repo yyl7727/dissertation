@@ -1,5 +1,6 @@
 package com.gsm.dissertation.dao;
 
+import com.gsm.dissertation.model.Teacher;
 import com.gsm.dissertation.model.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,5 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     @Query("update Users u set u.password = ?1 where u.uid = ?2")
     void modifyPassword(String pwd,Integer uid);
 
-
-    Optional<Users> findByAccount(String account);
+    Optional<Users> findStuByAccount(String account);
 }

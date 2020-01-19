@@ -145,7 +145,6 @@ public class UserController {
         Users u = null;
         Teacher teacher = null;
 
-
         if (userLogin.getType().equals(TYPESTUDENT)){
             if(userService.checkUser(userLogin).equals("0")) {
                 session.setAttribute("user",u);

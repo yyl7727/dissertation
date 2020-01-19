@@ -24,4 +24,6 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     void modifyPassword(String pwd,Integer uid);
 
     Optional<Users> findStuByAccount(String account);
+
+
 }

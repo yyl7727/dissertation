@@ -27,10 +27,10 @@
                                 <tbody>
                                     <tr th:each="guideTeacher: ${guideTeacherList}">
                                         <!-- 以选题学生用绿色显示class：text-success，未选题用红色显示class：text-danger -->
-                                        <td class="text-success" th:if="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getS_account()}"></td>
-                                        <td class="text-danger" th:unless="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getS_account()}"></td>
-                                        <td class="text-success" th:if="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getS_name()}"></td>
-                                        <td class="text-danger" th:unless="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getS_name()}"></td>
+                                        <td class="text-success" th:if="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getStudent_account()}"></td>
+                                        <td class="text-danger" th:unless="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getStudent_account()}"></td>
+                                        <td class="text-success" th:if="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getStudent_name()}"></td>
+                                        <td class="text-danger" th:unless="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getStudent_name()}"></td>
                                         <td class="text-success" th:if="${guideTeacher.getTopic_status() == 0}">已选题</td>
                                         <td class="text-danger" th:unless="${guideTeacher.getTopic_status() == 0}">未选题</td>
                                     </tr>

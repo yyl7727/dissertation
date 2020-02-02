@@ -1,6 +1,14 @@
 DELETE FROM parameter WHERE para_code='0001' AND para_type='0001';
-INSERT INTO parameter(para_type,para_name,para_code,para_value) VALUES('0001','职称','0001','学生');
+INSERT INTO parameter(para_type,para_name,para_code,para_value) VALUES('0001','登录类型','0001','学生');
 DELETE FROM parameter WHERE para_code='0002' AND para_type='0001';
-INSERT INTO parameter(para_type,para_name,para_code,para_value) VALUES('0001','职称','0002','教师');
+INSERT INTO parameter(para_type,para_name,para_code,para_value) VALUES('0001','登录类型','0002','教师');
 DELETE FROM parameter WHERE para_code='0003' AND para_type='0001';
-INSERT INTO parameter(para_type,para_name,para_code,para_value) VALUES('0001','职称','0003','管理员');
+INSERT INTO parameter(para_type,para_name,para_code,para_value) VALUES('0001','登录类型','0003','管理员');
+DELETE FROM parameter WHERE para_code='0001' AND para_type='0002';
+INSERT INTO parameter(para_type,para_name,para_code,para_value) VALUES('0002','职称','0001','助教');
+DELETE FROM parameter WHERE para_code='0002' AND para_type='0002';
+INSERT INTO parameter(para_type,para_name,para_code,para_value) VALUES('0002','职称','0002','讲师');
+DELETE FROM parameter WHERE para_code='0003' AND para_type='0002';
+INSERT INTO parameter(para_type,para_name,para_code,para_value) VALUES('0002','职称','0003','副教授');
+DELETE FROM parameter WHERE para_code='0004' AND para_type='0002';
+INSERT INTO parameter(para_type,para_name,para_code,para_value) VALUES('0002','职称','0004','教授');

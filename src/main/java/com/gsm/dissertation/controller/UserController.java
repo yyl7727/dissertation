@@ -5,10 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.gsm.dissertation.model.*;
 import com.gsm.dissertation.service.GuideTeacherService;
 import com.gsm.dissertation.service.ParameterService;
+import com.gsm.dissertation.service.TeacherService;
 import com.gsm.dissertation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +31,8 @@ public class UserController {
     private ParameterService parameterService;
     @Autowired
     private GuideTeacherService guideTeacherService;
+    @Autowired
+    private TeacherService teacherService;
 
     //登录类型常量
     /**
@@ -143,7 +144,7 @@ public class UserController {
             return "redirect:/login";
         }
         Users u = null;
-        Teacher teacher = null;
+        Teacher teacher;
 
         if (userLogin.getType().equals(TYPESTUDENT)){
             if(userService.checkUser(userLogin).equals("0")) {
@@ -152,8 +153,8 @@ public class UserController {
                 return "stumain";
             }
         }else if(userLogin.getType().equals(TYPETEACHER)){
-            if(userService.checkTeacher(userLogin).equals("0")){
-                teacher = userService.findTeacherByAccount(userLogin.getAccount());
+            if(teacherService.checkTeacher(userLogin).equals("0")){
+                teacher = teacherService.findTeacherByAccount(userLogin.getAccount());
                 session.setAttribute("user",teacher);
                 //跳转到教师主页
                 return "techmain";
@@ -164,5 +165,39 @@ public class UserController {
         //TODO 管理员
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/teacherinfo")
+    public String getInfo(Model model, HttpSession session){
+        Teacher teacher;
+        List<Parameter> list_ParameterTitles;
+        List<Parameter> list_ParameterEducation;
+        //教师信息获取，显示于个人信息页
+        teacher = (Teacher)session.getAttribute("user");
+        teacher = teacherService.findTeacherByAccount(teacher.getAccount());
+        list_ParameterTitles = parameterService.getParameterByType("0002");
+        list_ParameterEducation = parameterService.getParameterByType("0003");
+        if (!"".equals(teacher.getName())){
+            model.addAttribute("teacher",teacher);
+            model.addAttribute("titleList", list_ParameterTitles);
+            model.addAttribute("educationList",list_ParameterEducation);
+            return "teacherinfo";
+        }
+        else {
+            return "login";
+        }
+    }
+
+    @PostMapping("/teacherinfo")
+    public String alterTeacherInfo(@Valid Teacher teacher, BindingResult result, RedirectAttributes attr){
+        if (result.hasErrors()){
+            return "redirect:/teacherinfo";
+        }
+        if(teacherService.update(teacher).equals("0")){
+            return "redirect:/teacherinfo";
+        }else {
+            attr.addFlashAttribute("fail","保存失败");
+            return "redirect:/teacherinfo";
+        }
     }
 }

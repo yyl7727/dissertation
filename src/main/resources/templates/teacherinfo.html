@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
+    <title>个人信息</title>
+    <!-- Custom CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="col-lg-4 col-lg-offset-4  col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2 container col-center-block">
+        <div class="card card-outline-primary">
+            <div class="card-header">
+                <h4 class="m-b-0 text-white">教师个人信息</h4>
+            </div>
+            <div>
+                <form th:action="@{/teacherinfo}" method="post" th:object="${teacher}" style="align-content: center">
+                    <div>
+                        <input type="hidden" th:field="*{tid}">
+                        <input type="hidden" th:field="*{account}">
+                        <input type="hidden" th:field="*{password}">
+                        <hr>
+                        <div class="form-group">
+                            <label>姓名</label>
+                            <input readonly="readonly" type="text" class="form-control" th:field="*{name}"  placeholder="请输入姓名">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">性别</label>
+                            <input readonly="readonly" type="text" id="Gender" class="form-control" th:field="*{grander}"} placeholder="请输入性别">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">职称</label>
+                            <select class="form-control" th:field="*{titles}">
+                                <option th:each="para:${titleList}" th:value="${para.getPara_code()}" th:text="${para.getPara_value()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">学历</label>
+                            <select class="form-control" th:field="*{education}">
+                                <option th:each="para:${educationList}" th:value="${para.getPara_code()}" th:text="${para.getPara_value()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">研究方向</label>
+                            <input type="text" id="direction" class="form-control" th:field="*{direction}">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">学术成果</label>
+                            <input type="text" id="achievements" class="form-control" th:field="*{achievements}">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.slimscroll.js}"></script>
+    <script th:src="@{/js/sidebarmenu.js}"></script>
+    <script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+    <script th:src="@{/js/custom.min.js}"></script>
+</body>
+</html>

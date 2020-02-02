@@ -24,8 +24,4 @@ public interface UserService {
     void deletes(List<Users> usersList);
 
     String checkUser(UserLogin userLogin);
-
-    Teacher findTeacherByAccount(String account);
-
-    String checkTeacher(UserLogin userLogin);
 }

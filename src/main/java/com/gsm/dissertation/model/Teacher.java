@@ -50,12 +50,12 @@ public class Teacher {
     /**
      * 职称
      */
-    private int titles;
+    private String titles;
 
     /**
      * 学历
      */
-    private int education;
+    private String education;
 
     /**
      * 研究方向
@@ -107,19 +107,19 @@ public class Teacher {
         this.grander = grander;
     }
 
-    public int getTitles() {
+    public String getTitles() {
         return titles;
     }
 
-    public void setTitles(int titles) {
+    public void setTitles(String titles) {
         this.titles = titles;
     }
 
-    public int getEducation() {
+    public String getEducation() {
         return education;
     }
 
-    public void setEducation(int education) {
+    public void setEducation(String education) {
         this.education = education;
     }
 

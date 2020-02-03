@@ -184,19 +184,21 @@ public class UserController {
             return "teacherinfo";
         }
         else {
-            return "login";
+            return "redirect:/login";
         }
     }
 
     @PostMapping("/teacherinfo")
     public String alterTeacherInfo(@Valid Teacher teacher, BindingResult result, RedirectAttributes attr){
         if (result.hasErrors()){
+            attr.addFlashAttribute("fail","信息有误无法修改");
             return "redirect:/teacherinfo";
         }
         if(teacherService.update(teacher).equals("0")){
+            attr.addFlashAttribute("success","修改成功");
             return "redirect:/teacherinfo";
         }else {
-            attr.addFlashAttribute("fail","保存失败");
+            attr.addFlashAttribute("fail","修改失败");
             return "redirect:/teacherinfo";
         }
     }

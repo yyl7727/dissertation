@@ -37,6 +37,7 @@ public class Teacher {
      * 用户姓名
      */
     @Column(length = 30)
+    @NotNull
     private String name;
 
     /**

@@ -55,6 +55,11 @@
                 </form>
             </div>
         </div>
+        <div class="row" th:unless="${#strings.isEmpty(success)}">
+            <p class="alert alert-success" th:text="${success}"></p>
+        </div>
+        <div class="row" th:unless="${#strings.isEmpty(fail)}">
+            <p class="alert alert-danger" th:text="${fail}"></p>
         </div>
     </div>
     <script th:src="@{/js/lib/jquery/jquery.min.js}"></script>

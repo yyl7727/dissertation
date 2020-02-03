@@ -40,6 +40,11 @@ public class TopicRelease {
     private String t_name;
 
     /**
+     * 可选专业
+     */
+    private String t_major;
+
+    /**
      * 发布状态
      * 0有效  1失效
      */
@@ -92,5 +97,13 @@ public class TopicRelease {
 
     public void setT_status(Integer t_status) {
         this.t_status = t_status;
+    }
+
+    public String getT_major() {
+        return t_major;
+    }
+
+    public void setT_major(String t_major) {
+        this.t_major = t_major;
     }
 }

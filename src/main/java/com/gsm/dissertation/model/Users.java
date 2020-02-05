@@ -67,9 +67,10 @@ public class Users {
     private Integer lasttime;
 
     /**
-     * 登录次数
+     * 专业
      */
-    private Integer logincount;
+    @NotNull
+    private String major;
 
     /**
      * 是否有效
@@ -147,12 +148,12 @@ public class Users {
         this.lasttime = lasttime;
     }
 
-    public Integer getLogincount() {
-        return logincount;
+    public String getMajor() {
+        return major;
     }
 
-    public void setLogincount(Integer logincount) {
-        this.logincount = logincount;
+    public void setMajor(String major) {
+        this.major = major;
     }
 
     public Integer getValidstate() {
@@ -161,28 +162,5 @@ public class Users {
 
     public void setValidstate(Integer validstate) {
         this.validstate = validstate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Users users = (Users) o;
-        return Objects.equals(uid, users.uid) &&
-                Objects.equals(account, users.account) &&
-                Objects.equals(password, users.password) &&
-                Objects.equals(name, users.name) &&
-                grander == users.grander &&
-                Objects.equals(birthday, users.birthday) &&
-                Objects.equals(mobile, users.mobile) &&
-                Objects.equals(email, users.email) &&
-                Objects.equals(lasttime, users.lasttime) &&
-                Objects.equals(logincount, users.logincount) &&
-                Objects.equals(validstate, users.validstate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(uid, account, password, name, grander, birthday, mobile, email, lasttime, logincount, validstate);
     }
 }

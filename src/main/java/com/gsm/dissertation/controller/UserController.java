@@ -143,11 +143,12 @@ public class UserController {
         if (result.hasErrors()){
             return "redirect:/login";
         }
-        Users u = null;
+        Users u;
         Teacher teacher;
 
         if (userLogin.getType().equals(TYPESTUDENT)){
             if(userService.checkUser(userLogin).equals("0")) {
+                u = userService.findUsersByAccount(userLogin.getAccount());
                 session.setAttribute("user",u);
                 //跳转到学生登录首页
                 return "stumain";
@@ -168,13 +169,12 @@ public class UserController {
     }
 
     @GetMapping("/teacherinfo")
-    public String getInfo(Model model, HttpSession session){
+    public String getTeacherInfo(Model model, HttpSession session){
         Teacher teacher;
         List<Parameter> list_ParameterTitles;
         List<Parameter> list_ParameterEducation;
         //教师信息获取，显示于个人信息页
         teacher = (Teacher)session.getAttribute("user");
-        teacher = teacherService.findTeacherByAccount(teacher.getAccount());
         list_ParameterTitles = parameterService.getParameterByType("0002");
         list_ParameterEducation = parameterService.getParameterByType("0003");
         if (!"".equals(teacher.getName())){
@@ -200,6 +200,19 @@ public class UserController {
         }else {
             attr.addFlashAttribute("fail","修改失败");
             return "redirect:/teacherinfo";
+        }
+    }
+
+    @GetMapping("/studentinfo")
+    public String getStudentInfo(Model model, HttpSession session){
+        Users student;
+        student = (Users)session.getAttribute("user");
+        if (!"".equals(student.getName())){
+            model.addAttribute("student",student);
+            return "studentinfo";
+        }
+        else {
+            return "redirect:/login";
         }
     }
 }

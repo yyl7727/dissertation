@@ -79,4 +79,10 @@ public class UserServiceImpl implements UserService {
             return "用户不存在";
         }
     }
+
+    @Override
+    public Users findUsersByAccount(String account) {
+        Users student = userRepository.findStuByAccount(account).get();
+        return student;
+    }
 }

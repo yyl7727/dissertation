@@ -85,4 +85,14 @@ public class UserServiceImpl implements UserService {
         Users student = userRepository.findStuByAccount(account).get();
         return student;
     }
+
+    @Override
+    public String update(Users student) {
+        try {
+            userRepository.saveAndFlush(student);
+            return "0";
+        }catch (Exception ex){
+            return "保存失败，错误信息:"+ex.getMessage();
+        }
+    }
 }

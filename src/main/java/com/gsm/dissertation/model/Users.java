@@ -64,7 +64,7 @@ public class Users {
     /**
      * 最后登录时间
      */
-    private Integer lasttime;
+    private String lasttime;
 
     /**
      * 专业
@@ -140,11 +140,11 @@ public class Users {
         this.email = email;
     }
 
-    public Integer getLasttime() {
+    public String getLasttime() {
         return lasttime;
     }
 
-    public void setLasttime(Integer lasttime) {
+    public void setLasttime(String lasttime) {
         this.lasttime = lasttime;
     }
 

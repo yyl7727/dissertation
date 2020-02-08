@@ -1,6 +1,5 @@
 package com.gsm.dissertation.service;
 
-import com.gsm.dissertation.model.Teacher;
 import com.gsm.dissertation.model.UserLogin;
 import com.gsm.dissertation.model.Users;
 import org.springframework.data.domain.Page;
@@ -26,4 +25,6 @@ public interface UserService {
     String checkUser(UserLogin userLogin);
 
     Users findUsersByAccount(String account);
+
+    String update(Users student);
 }

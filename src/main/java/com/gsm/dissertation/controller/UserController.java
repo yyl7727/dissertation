@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,6 +151,10 @@ public class UserController {
         if (userLogin.getType().equals(TYPESTUDENT)){
             if(userService.checkUser(userLogin).equals("0")) {
                 u = userService.findUsersByAccount(userLogin.getAccount());
+                LocalDateTime dateTime = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+                u.setLasttime(dateTime.format(formatter));
+                userService.update(u);
                 session.setAttribute("user",u);
                 //跳转到学生登录首页
                 return "stumain";
@@ -206,13 +212,31 @@ public class UserController {
     @GetMapping("/studentinfo")
     public String getStudentInfo(Model model, HttpSession session){
         Users student;
+        List<Parameter> list_ParameterMajor;
         student = (Users)session.getAttribute("user");
+        list_ParameterMajor = parameterService.getParameterByType("0004");
         if (!"".equals(student.getName())){
             model.addAttribute("student",student);
+            model.addAttribute("major",list_ParameterMajor);
             return "studentinfo";
         }
         else {
             return "redirect:/login";
+        }
+    }
+
+    @PostMapping("/studentinfo")
+    public String alterStudentInfo(@Valid Users student, BindingResult result, RedirectAttributes attr){
+        if (result.hasErrors()){
+            attr.addFlashAttribute("fail","信息有误无法修改");
+            return "redirect:/studentinfo";
+        }
+        if(userService.update(student).equals("0")){
+            attr.addFlashAttribute("success","修改成功");
+            return "redirect:/studentinfo";
+        }else {
+            attr.addFlashAttribute("fail","修改失败");
+            return "redirect:/studentinfo";
         }
     }
 }

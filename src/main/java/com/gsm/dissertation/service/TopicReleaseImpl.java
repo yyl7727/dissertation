@@ -9,5 +9,11 @@ import java.util.List;
 
 @Service
 public class TopicReleaseImpl implements TopicReleaseService {
+    @Autowired
+    TopicReleaseRepository topicReleaseRepository;
 
+    @Override
+    public List<TopicRelease> findByMajor(String major) {
+        return topicReleaseRepository.findTopicReleaseByMajor(major);
+    }
 }

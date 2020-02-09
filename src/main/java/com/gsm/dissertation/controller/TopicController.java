@@ -6,6 +6,7 @@ import com.gsm.dissertation.dao.TopicReleaseRepository;
 import com.gsm.dissertation.model.Parameter;
 import com.gsm.dissertation.model.Teacher;
 import com.gsm.dissertation.model.TopicRelease;
+import com.gsm.dissertation.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +37,7 @@ public class TopicController {
         try{
             //课题名称不为空时
             if (topicRelease.getT_topicname()!=""){
-                topicRelease.setT_status(0);
+                topicRelease.setT_status("0");
                 Teacher teacher = (Teacher) session.getAttribute("user");
                 topicRelease.setT_teacher(teacher.getAccount());
                 topicRelease.setT_name(teacher.getName());
@@ -51,5 +52,14 @@ public class TopicController {
             attr.addFlashAttribute("error","课题发布失败："+ex.getMessage());
             return "redirect:/topicrelease";
         }
+    }
+
+    @GetMapping("/topicselect")
+    public String topicSelect(Model model, HttpSession session){
+        Users student = (Users)session.getAttribute("user");
+        List<TopicRelease> topicReleaseList =
+                topicReleaseRepository.findTopicReleaseByMajor(student.getMajor());
+        model.addAttribute("topicReleaseList",topicReleaseList);
+        return "topicselect";
     }
 }

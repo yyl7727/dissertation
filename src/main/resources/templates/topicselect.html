@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
+    <title>课题选择</title>
+    <!-- Custom CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Start Page Content -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">课题选择</h4>
+                        <h6 class="card-subtitle">选择一个你喜欢的课题</h6>
+                        <div class="table-responsive m-t-40">
+                            <table id="myTable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>课题名称</th>
+                                        <th>课题简介</th>
+                                        <th>发布教师</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="topic: ${topicReleaseList}">
+                                        <td th:text="${topic.getT_topicname()}"></td>
+                                        <td th:text="${topic.getT_explain()}"></td>
+                                        <td th:text="${topic.getT_name()}"></td>
+                                        <td th:text="${topic.getT_status()}==0?'可选':'不可选'"></td>
+                                        <td>
+                                            <a class="btn btn-sm round btn-outline-success">确定选题</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.slimscroll.js}"></script>
+    <script th:src="@{/js/sidebarmenu.js}"></script>
+    <script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+    <script th:src="@{/js/custom.min.js}"></script>
+</body>
+</html>

@@ -49,7 +49,7 @@ public class TopicRelease {
      * 0有效  1失效
      */
     @NotNull(message = "论题状态不能为空")
-    private Integer t_status;
+    private String t_status;
 
     public Integer getTid() {
         return tid;
@@ -91,11 +91,11 @@ public class TopicRelease {
         this.t_name = t_name;
     }
 
-    public Integer getT_status() {
+    public String getT_status() {
         return t_status;
     }
 
-    public void setT_status(Integer t_status) {
+    public void setT_status(String t_status) {
         this.t_status = t_status;
     }
 

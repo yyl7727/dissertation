@@ -69,21 +69,26 @@ public class TopicController {
 
     @GetMapping("/selecttopic/{tid}")
     public String selectTopic(@PathVariable("tid") String tid, HttpSession session, RedirectAttributes attr){
-        TopicRelease topicRelease = topicReleaseRepository.findById(Integer.parseInt(tid)).get();
-        TopicSelect topicSelect = new TopicSelect();
-        LocalDateTime dateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
         Users student = (Users) session.getAttribute("user");
-        topicSelect.setsId(student.getUid().toString());
-        topicSelect.setsName(student.getName());
-        topicSelect.setStatus("0");
-        topicSelect.setsTime(dateTime.format(formatter));
-        topicSelect.settId(topicRelease.getTid().toString());
-        topicSelect.settName(topicRelease.getT_name());
-        topicSelect.setT_TId(topicRelease.getT_teacher());
-        topicSelect.setT_TName(topicRelease.getT_name());
-        topicSelectRepository.save(topicSelect);
-        attr.addFlashAttribute("ok","选题成功，等待教师审核！");
-        return "redirect:/topicselect";
+        if (topicSelectRepository.findCountByStudent(student.getUid().toString()) == 0){
+            TopicRelease topicRelease = topicReleaseRepository.findById(Integer.parseInt(tid)).get();
+            TopicSelect topicSelect = new TopicSelect();
+            LocalDateTime dateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+            topicSelect.setsId(student.getUid().toString());
+            topicSelect.setsName(student.getName());
+            topicSelect.setStatus("0");
+            topicSelect.setsTime(dateTime.format(formatter));
+            topicSelect.settId(topicRelease.getTid().toString());
+            topicSelect.settName(topicRelease.getT_name());
+            topicSelect.setT_TId(topicRelease.getT_teacher());
+            topicSelect.setT_TName(topicRelease.getT_name());
+            topicSelectRepository.save(topicSelect);
+            attr.addFlashAttribute("ok","选题成功，等待教师审核！");
+            return "redirect:/topicselect";
+        }else{
+            attr.addFlashAttribute("error","已经选题，不可重复选题，如需修改请联系管理员。");
+            return "redirect:/topicselect";
+        }
     }
 }

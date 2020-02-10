@@ -3,10 +3,7 @@ package com.gsm.dissertation.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gsm.dissertation.model.*;
-import com.gsm.dissertation.service.GuideTeacherService;
-import com.gsm.dissertation.service.ParameterService;
-import com.gsm.dissertation.service.TeacherService;
-import com.gsm.dissertation.service.UserService;
+import com.gsm.dissertation.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +32,8 @@ public class UserController {
     private GuideTeacherService guideTeacherService;
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private TopicSelectService topicSelectService;
 
     //登录类型常量
     /**
@@ -55,7 +54,9 @@ public class UserController {
         //获取教师管理的学生的学号姓名以及选题状态
         Teacher teacher = (Teacher)session.getAttribute("user");
         List<GuideTeacher> guideTeacherList = guideTeacherService.getGuideTeacherByAccount(teacher.getAccount());
-        model.addAttribute("guideTeacherList",guideTeacherList);
+        List<TopicSelect> topicSelectList = topicSelectService.findByTeacher(teacher.getAccount());
+        model.addAttribute("guideTeacherList", guideTeacherList);
+        model.addAttribute("topicSelectList", topicSelectList);
         return "stulist";
     }
 

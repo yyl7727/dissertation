@@ -91,4 +91,11 @@ public class TopicController {
             return "redirect:/topicselect";
         }
     }
+
+
+
+//    @GetMapping("/applyapproval/{id}")
+//    public String applyApproval(@PathVariable("id") String id, HttpSession session, RedirectAttributes attr){
+//
+//    }
 }

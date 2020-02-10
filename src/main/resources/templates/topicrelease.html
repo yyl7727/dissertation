@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/lib/html5-editor/bootstrap-wysihtml5.css}" />
-    <!-- Custom CSS -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
@@ -17,8 +15,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <!--<h4 class="card-title">Bootstrap wysihtml5</h4>
-                        <h6 class="card-subtitle">Bootstrap html5 editor</h6>-->
+                        <h4 class="card-title">课题发布</h4>
+                        <h6 class="card-subtitle">填写对应信息后发布课题</h6>
                         <form th:action="@{/topicrelease}" th:object="${topicRelease}" method="POST">
                             <div class="form-group">
                                 <input class="form-control" th:field="*{t_topicname}" placeholder="请输入课题名称">
@@ -45,24 +43,16 @@
                 <p class="alert alert-danger" th:text="${error}"></p>
             </div>
         </div>
-
-        <!-- End Page Content -->
     </div>
-    <!-- All Jquery -->
     <script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
-    <!-- Bootstrap tether Core JavaScript -->
     <script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
     <script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
     <script th:src="@{/js/jquery.slimscroll.js}"></script>
-    <!--Menu sidebar -->
     <script th:src="@{/js/sidebarmenu.js}"></script>
-    <!--stickey kit -->
     <script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
     <script th:src="@{/js/lib/html5-editor/wysihtml5-0.3.0.js}"></script>
     <script th:src="@{/js/lib/html5-editor/bootstrap-wysihtml5.js}"></script>
     <script th:src="@{/js/lib/html5-editor/wysihtml5-init.js}"></script>
-    <!--Custom JavaScript -->
     <script th:src="@{/js/custom.min.js}"></script>
 </body>
 </html>

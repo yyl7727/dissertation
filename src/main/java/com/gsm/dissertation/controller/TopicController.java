@@ -80,7 +80,7 @@ public class TopicController {
             topicSelect.setStatus("0");
             topicSelect.setsTime(dateTime.format(formatter));
             topicSelect.settId(topicRelease.getTid().toString());
-            topicSelect.settName(topicRelease.getT_name());
+            topicSelect.settName(topicRelease.getT_topicname());
             topicSelect.setT_TId(topicRelease.getT_teacher());
             topicSelect.setT_TName(topicRelease.getT_name());
             topicSelectRepository.save(topicSelect);

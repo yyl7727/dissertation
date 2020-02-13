@@ -18,35 +18,35 @@ public class TopicSelect {
      * 论题id
      */
     @NotNull
-    private String tId;
+    private String topicId;
 
     /**
      * 论题名称
      */
-    private String tName;
+    private String topicName;
     /**
-     * 学生id
+     * 学生账号
      */
-    private String sId;
+    private String studentAccount;
     /**
      * 学生姓名
      */
-    private String sName;
+    private String studentName;
 
     /**
      * 教师编号
      */
-    private String t_TId;
+    private String teacherAccount;
 
     /**
      * 教师姓名
      */
-    private String t_TName;
+    private String teacherName;
 
     /**
      * 申请时间
      */
-    private String sTime;
+    private String applyTime;
 
     /**
      * 状态 0：待审批 1：通过申请 2：未通过
@@ -61,44 +61,60 @@ public class TopicSelect {
         this.id = id;
     }
 
-    public String gettId() {
-        return tId;
+    public String getTopicId() {
+        return topicId;
     }
 
-    public void settId(String tId) {
-        this.tId = tId;
+    public void setTopicid(String topicid) {
+        this.topicId = topicid;
     }
 
-    public String gettName() {
-        return tName;
+    public String getTopicName() {
+        return topicName;
     }
 
-    public void settName(String tName) {
-        this.tName = tName;
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
     }
 
-    public String getsId() {
-        return sId;
+    public String getStudentAccount() {
+        return studentAccount;
     }
 
-    public void setsId(String sId) {
-        this.sId = sId;
+    public void setStudentAccount(String studentAccount) {
+        this.studentAccount = studentAccount;
     }
 
-    public String getsName() {
-        return sName;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setsName(String sName) {
-        this.sName = sName;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
-    public String getsTime() {
-        return sTime;
+    public String getTeacherAccount() {
+        return teacherAccount;
     }
 
-    public void setsTime(String sTime) {
-        this.sTime = sTime;
+    public void setTeacherAccount(String teacherAccount) {
+        this.teacherAccount = teacherAccount;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(String applyTime) {
+        this.applyTime = applyTime;
     }
 
     public String getStatus() {
@@ -107,21 +123,5 @@ public class TopicSelect {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getT_TId() {
-        return t_TId;
-    }
-
-    public void setT_TId(String t_TId) {
-        this.t_TId = t_TId;
-    }
-
-    public String getT_TName() {
-        return t_TName;
-    }
-
-    public void setT_TName(String t_TName) {
-        this.t_TName = t_TName;
     }
 }

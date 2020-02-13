@@ -19,30 +19,30 @@ public class TopicRelease {
      * 论题名称
      */
     @NotNull(message = "论题名称不能为空")
-    private String t_topicname;
+    private String topicName;
 
     /**
      * 论题说明
      */
     @NotNull(message = "论题说明不能为空")
-    private String t_explain;
+    private String topicExplain;
 
     /**
      * 论题发布教师
      */
     @NotNull(message = "论题发布教师不能为空")
-    private String t_teacher;
+    private String teacherAccount;
 
     /**
      * 教师姓名
      */
     @NotNull(message = "论题发布教师姓名不能为空")
-    private String t_name;
+    private String teacherName;
 
     /**
      * 可选专业
      */
-    private String t_major;
+    private String topicMajor;
 
     /**
      * 发布状态
@@ -59,36 +59,44 @@ public class TopicRelease {
         this.tid = tid;
     }
 
-    public String getT_topicname() {
-        return t_topicname;
+    public String getTopicName() {
+        return topicName;
     }
 
-    public void setT_topicname(String t_topicname) {
-        this.t_topicname = t_topicname;
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
     }
 
-    public String getT_explain() {
-        return t_explain;
+    public String getTopicExplain() {
+        return topicExplain;
     }
 
-    public void setT_explain(String t_explain) {
-        this.t_explain = t_explain;
+    public void setTopicExplain(String topicExplain) {
+        this.topicExplain = topicExplain;
     }
 
-    public String getT_teacher() {
-        return t_teacher;
+    public String getTeacherAccount() {
+        return teacherAccount;
     }
 
-    public void setT_teacher(String t_teacher) {
-        this.t_teacher = t_teacher;
+    public void setTeacherAccount(String teacherAccount) {
+        this.teacherAccount = teacherAccount;
     }
 
-    public String getT_name() {
-        return t_name;
+    public String getTeacherName() {
+        return teacherName;
     }
 
-    public void setT_name(String t_name) {
-        this.t_name = t_name;
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getTopicMajor() {
+        return topicMajor;
+    }
+
+    public void setTopicMajor(String topicMajor) {
+        this.topicMajor = topicMajor;
     }
 
     public String getT_status() {
@@ -97,13 +105,5 @@ public class TopicRelease {
 
     public void setT_status(String t_status) {
         this.t_status = t_status;
-    }
-
-    public String getT_major() {
-        return t_major;
-    }
-
-    public void setT_major(String t_major) {
-        this.t_major = t_major;
     }
 }

@@ -12,4 +12,6 @@ public interface GuideTeacherService {
      * @return 对应指导教师下的所有学生
      */
     List<GuideTeacher> getGuideTeacherByAccount(String account);
+
+    void save(GuideTeacher guideTeacher);
 }

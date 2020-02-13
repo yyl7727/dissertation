@@ -27,12 +27,12 @@
                                 <tbody>
                                     <tr th:each="guideTeacher: ${guideTeacherList}">
                                         <!-- 以选题学生用绿色显示class：text-success，未选题用红色显示class：text-danger -->
-                                        <td class="text-success" th:if="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getStudent_account()}"></td>
-                                        <td class="text-danger" th:unless="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getStudent_account()}"></td>
-                                        <td class="text-success" th:if="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getStudent_name()}"></td>
-                                        <td class="text-danger" th:unless="${guideTeacher.getTopic_status() == 0}" th:text="${guideTeacher.getStudent_name()}"></td>
-                                        <td class="text-success" th:if="${guideTeacher.getTopic_status() == 0}">已选题</td>
-                                        <td class="text-danger" th:unless="${guideTeacher.getTopic_status() == 0}">未选题</td>
+                                        <td class="text-success" th:if="${guideTeacher.getStatus() == 0}" th:text="${guideTeacher.getStudentAccount()}"></td>
+                                        <td class="text-danger" th:unless="${guideTeacher.getStatus() == 0}" th:text="${guideTeacher.getStudentAccount()}"></td>
+                                        <td class="text-success" th:if="${guideTeacher.getStatus() == 0}" th:text="${guideTeacher.getStudentName()}"></td>
+                                        <td class="text-danger" th:unless="${guideTeacher.getStatus() == 0}" th:text="${guideTeacher.getStudentName()}"></td>
+                                        <td class="text-success" th:if="${guideTeacher.getStatus() == 0}">已选题</td>
+                                        <td class="text-danger" th:unless="${guideTeacher.getStatus() == 0}">未选题</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -60,13 +60,13 @@
                             </thead>
                             <tbody>
                                 <tr th:each="topicSelect: ${topicSelectList}">
-                                    <td th:text="${topicSelect.getsTime()}"></td>
-                                    <td th:text="${topicSelect.gettName()}"></td>
-                                    <td th:text="${topicSelect.getsName()}"></td>
-                                    <td th:text="${topicSelect.getT_TName()}"></td>
+                                    <td th:text="${topicSelect.getApplyTime()}"></td>
+                                    <td th:text="${topicSelect.getTopicName()}"></td>
+                                    <td th:text="${topicSelect.getStudentName()}"></td>
+                                    <td th:text="${topicSelect.getTeacherName()}"></td>
                                     <td th:text="未审批"></td>
                                     <td>
-                                        <a class="btn btn-sm round btn-outline-success">同意</a>
+                                        <a class="btn btn-sm round btn-outline-success" th:href="@{|/applyapproval/${topicSelect.getId()}|}">同意</a>
                                         <a class="btn btn-sm round btn-outline-danger">拒绝</a>
                                     </td>
                                 </tr>

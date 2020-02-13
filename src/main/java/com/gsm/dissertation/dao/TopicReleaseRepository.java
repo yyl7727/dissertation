@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TopicReleaseRepository extends JpaRepository<TopicRelease,Integer> {
-    @Query("select t from TopicRelease t where t.t_major=?1")
+    @Query("select t from TopicRelease t where t.topicMajor=?1")
     List<TopicRelease> findTopicReleaseByMajor(String major);
 }

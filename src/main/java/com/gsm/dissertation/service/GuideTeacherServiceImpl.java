@@ -22,4 +22,9 @@ public class GuideTeacherServiceImpl implements GuideTeacherService {
         List<GuideTeacher> list_GuideTeacher = guideTeacherRepository.getGuideTeacherByAccount(account);
         return list_GuideTeacher;
     }
+
+    @Override
+    public void save(GuideTeacher guideTeacher) {
+        guideTeacherRepository.save(guideTeacher);
+    }
 }

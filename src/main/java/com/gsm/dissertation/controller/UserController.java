@@ -175,6 +175,11 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping("/techmain")
+    public String teacherMain(){
+        return "techmain";
+    }
+
     @GetMapping("/teacherinfo")
     public String getTeacherInfo(Model model, HttpSession session){
         Teacher teacher;
@@ -182,6 +187,8 @@ public class UserController {
         List<Parameter> list_ParameterEducation;
         //教师信息获取，显示于个人信息页
         teacher = (Teacher)session.getAttribute("user");
+        //如果使用session来显示信息，修改信息后就无法实时显示修改，因此在这里重新查找后再绑定到页面
+        teacher = teacherService.findTeacherByAccount(teacher.getAccount());
         list_ParameterTitles = parameterService.getParameterByType("0002");
         list_ParameterEducation = parameterService.getParameterByType("0003");
         if (!"".equals(teacher.getName())){
@@ -215,6 +222,8 @@ public class UserController {
         Users student;
         List<Parameter> list_ParameterMajor;
         student = (Users)session.getAttribute("user");
+        //如果使用session来显示信息，修改信息后就无法实时显示修改，因此在这里重新查找后再绑定到页面
+        student = userService.findUsersByAccount(student.getAccount());
         list_ParameterMajor = parameterService.getParameterByType("0004");
         if (!"".equals(student.getName())){
             model.addAttribute("student",student);

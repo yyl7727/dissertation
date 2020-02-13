@@ -19,15 +19,15 @@
                         <h6 class="card-subtitle">填写对应信息后发布课题</h6>
                         <form th:action="@{/topicrelease}" th:object="${topicRelease}" method="POST">
                             <div class="form-group">
-                                <input class="form-control" th:field="*{t_topicname}" placeholder="请输入课题名称">
+                                <input class="form-control" th:field="*{topicName}" placeholder="请输入课题名称">
                             </div>
                             <div class="form-group">
-                                <select class="form-control" th:field="*{t_major}">
+                                <select class="form-control" th:field="*{topicMajor}">
                                     <option th:each="major:${majorlist}" th:value="${major.getPara_code()}" th:text="${major.getPara_value()}"></option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <textarea class="textarea_editor form-control" rows="15" th:field="*{t_explain}" placeholder="Enter text ..." style="height:450px"></textarea>
+                                <textarea class="textarea_editor form-control" rows="15" th:field="*{topicExplain}" placeholder="Enter text ..." style="height:450px"></textarea>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">发布课题</button>

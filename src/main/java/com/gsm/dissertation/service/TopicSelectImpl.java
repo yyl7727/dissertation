@@ -4,6 +4,7 @@ import com.gsm.dissertation.dao.TopicSelectRepository;
 import com.gsm.dissertation.model.TopicSelect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,12 +14,28 @@ public class TopicSelectImpl implements TopicSelectService {
     TopicSelectRepository topicSelectRepository;
 
     @Override
-    public Integer findCountByStudent(String sId) {
-        return topicSelectRepository.findCountByStudent(sId);
+    public void save(TopicSelect topicSelect) {
+        topicSelectRepository.save(topicSelect);
     }
 
     @Override
-    public List<TopicSelect> findByTeacher(String tid) {
-        return topicSelectRepository.findByTeacher(tid);
+    public Integer findCountByStudent(String account) {
+        return topicSelectRepository.findCountByStudent(account);
+    }
+
+    @Override
+    public List<TopicSelect> findByTeacher(String account) {
+        return topicSelectRepository.findByTeacher(account);
+    }
+
+    @Transactional
+    @Override
+    public void updateStatusById(Integer id) {
+        topicSelectRepository.updateStatusById(id);
+    }
+
+    @Override
+    public TopicSelect findById(Integer id) {
+        return topicSelectRepository.findById(id).get();
     }
 }

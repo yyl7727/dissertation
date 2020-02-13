@@ -4,8 +4,15 @@ import com.gsm.dissertation.model.TopicSelect;
 
 import java.util.List;
 
-public interface TopicSelectService {
-    Integer findCountByStudent(String sId);
 
-    List<TopicSelect> findByTeacher(String tid);
+public interface TopicSelectService {
+    void save(TopicSelect topicSelect);
+
+    Integer findCountByStudent(String account);
+
+    List<TopicSelect> findByTeacher(String account);
+
+    void updateStatusById(Integer id);
+
+    TopicSelect findById(Integer id);
 }

@@ -27,9 +27,9 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="topic: ${topicReleaseList}">
-                                        <td th:text="${topic.getT_topicname()}"></td>
-                                        <td th:text="${topic.getT_explain()}"></td>
-                                        <td th:text="${topic.getT_name()}"></td>
+                                        <td th:text="${topic.getTopicName()}"></td>
+                                        <td th:text="${topic.getTopicExplain()}"></td>
+                                        <td th:text="${topic.getTeacherName()}"></td>
                                         <td th:text="${topic.getT_status()}==0?'可选':'不可选'"></td>
                                         <td>
                                             <a class="btn btn-sm round btn-outline-success" th:href="@{|/selecttopic/${topic.getTid()}|}">确定选题</a>

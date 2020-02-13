@@ -5,6 +5,8 @@ import com.gsm.dissertation.dao.ParameterRepository;
 import com.gsm.dissertation.dao.TopicReleaseRepository;
 import com.gsm.dissertation.dao.TopicSelectRepository;
 import com.gsm.dissertation.model.*;
+import com.gsm.dissertation.service.GuideTeacherService;
+import com.gsm.dissertation.service.TopicSelectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.Convert;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,7 +27,9 @@ public class TopicController {
     @Autowired
     ParameterRepository parameterRepository;
     @Autowired
-    TopicSelectRepository topicSelectRepository;
+    TopicSelectService TopicSelectService;
+    @Autowired
+    GuideTeacherService guideTeacherService;
 
     @GetMapping("/topicrelease")
     public String stuList(Model model){
@@ -40,11 +43,11 @@ public class TopicController {
     public String stuList(TopicRelease topicRelease, HttpSession session, RedirectAttributes attr){
         try{
             //课题名称不为空时
-            if (topicRelease.getT_topicname()!=""){
+            if (topicRelease.getTopicName()!=""){
                 topicRelease.setT_status("0");
                 Teacher teacher = (Teacher) session.getAttribute("user");
-                topicRelease.setT_teacher(teacher.getAccount());
-                topicRelease.setT_name(teacher.getName());
+                topicRelease.setTeacherAccount(teacher.getAccount());
+                topicRelease.setTeacherName(teacher.getName());
                 topicReleaseRepository.save(topicRelease);
                 attr.addFlashAttribute("ok","课题发布成功");
                 return "redirect:/topicrelease";
@@ -70,20 +73,20 @@ public class TopicController {
     @GetMapping("/selecttopic/{tid}")
     public String selectTopic(@PathVariable("tid") String tid, HttpSession session, RedirectAttributes attr){
         Users student = (Users) session.getAttribute("user");
-        if (topicSelectRepository.findCountByStudent(student.getUid().toString()) == 0){
+        if (TopicSelectService.findCountByStudent(student.getAccount()) == 0){
             TopicRelease topicRelease = topicReleaseRepository.findById(Integer.parseInt(tid)).get();
             TopicSelect topicSelect = new TopicSelect();
             LocalDateTime dateTime = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
-            topicSelect.setsId(student.getUid().toString());
-            topicSelect.setsName(student.getName());
+            topicSelect.setStudentAccount(student.getAccount());
+            topicSelect.setStudentName(student.getName());
             topicSelect.setStatus("0");
-            topicSelect.setsTime(dateTime.format(formatter));
-            topicSelect.settId(topicRelease.getTid().toString());
-            topicSelect.settName(topicRelease.getT_topicname());
-            topicSelect.setT_TId(topicRelease.getT_teacher());
-            topicSelect.setT_TName(topicRelease.getT_name());
-            topicSelectRepository.save(topicSelect);
+            topicSelect.setApplyTime(dateTime.format(formatter));
+            topicSelect.setTopicid(tid);
+            topicSelect.setTopicName(topicRelease.getTopicName());
+            topicSelect.setTeacherAccount(topicRelease.getTeacherAccount());
+            topicSelect.setTeacherName(topicRelease.getTeacherName());
+            TopicSelectService.save(topicSelect);
             attr.addFlashAttribute("ok","选题成功，等待教师审核！");
             return "redirect:/topicselect";
         }else{
@@ -92,10 +95,21 @@ public class TopicController {
         }
     }
 
-
-
-//    @GetMapping("/applyapproval/{id}")
-//    public String applyApproval(@PathVariable("id") String id, HttpSession session, RedirectAttributes attr){
-//
-//    }
+    @GetMapping("/applyapproval/{id}")
+    public String applyApproval(@PathVariable("id") Integer id, HttpSession session, RedirectAttributes attr){
+        if(id!=null && !"".equals(id)){
+            Teacher teacher = (Teacher) session.getAttribute("user");
+            TopicSelectService.updateStatusById(id);
+            TopicSelect topicSelect = TopicSelectService.findById(id);
+            GuideTeacher guideTeacher=new GuideTeacher();
+            guideTeacher.setTeacherAccount(teacher.getAccount());
+            guideTeacher.setTeacherName(teacher.getName());
+            guideTeacher.setStudentAccount(topicSelect.getStudentAccount());
+            guideTeacher.setStudentName(topicSelect.getStudentName());
+            guideTeacher.setTopicId(topicSelect.getTopicId());
+            guideTeacher.setTopicName(topicSelect.getTopicName());
+            //guideTeacherService
+        }
+        return "redirect:/techmain";
+    }
 }

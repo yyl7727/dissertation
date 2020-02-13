@@ -15,110 +15,110 @@ public class GuideTeacher {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer gid;
+    private Integer id;
 
     /**
      * 教师账号
      */
     @NotNull
-    private String teacher_account;
+    private String teacherAccount;
 
     /**
      * 教师姓名
      */
     @NotNull
-    private String teacher_name;
+    private String teacherName;
 
     /**
      * 学生账号
      */
     @NotNull
-    private String student_account;
+    private String studentAccount;
 
     /**
      * 学生姓名
      */
     @NotNull
-    private String student_name;
+    private String studentName;
 
     /**
      * 选择论题id
      */
-    private String topic_id;
+    private String topicId;
 
     /**
      * 选择论题名称
      */
-    private String topic_name;
+    private String topicName;
 
     /**
      * 论文选题状态
      * 0：选题完毕 1：尚未选题
      */
     @NotNull
-    private int topic_status;
+    private int status;
 
-    public Integer getGid() {
-        return gid;
+    public Integer getId() {
+        return id;
     }
 
-    public void setGid(Integer gid) {
-        this.gid = gid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getTeacher_account() {
-        return teacher_account;
+    public String getTeacherAccount() {
+        return teacherAccount;
     }
 
-    public void setTeacher_account(String teacher_account) {
-        this.teacher_account = teacher_account;
+    public void setTeacherAccount(String teacherAccount) {
+        this.teacherAccount = teacherAccount;
     }
 
-    public String getTeacher_name() {
-        return teacher_name;
+    public String getTeacherName() {
+        return teacherName;
     }
 
-    public void setTeacher_name(String teacher_name) {
-        this.teacher_name = teacher_name;
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
-    public String getStudent_account() {
-        return student_account;
+    public String getStudentAccount() {
+        return studentAccount;
     }
 
-    public void setStudent_account(String student_account) {
-        this.student_account = student_account;
+    public void setStudentAccount(String studentAccount) {
+        this.studentAccount = studentAccount;
     }
 
-    public String getStudent_name() {
-        return student_name;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setStudent_name(String student_name) {
-        this.student_name = student_name;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
-    public String getTopic_id() {
-        return topic_id;
+    public String getTopicId() {
+        return topicId;
     }
 
-    public void setTopic_id(String topic_id) {
-        this.topic_id = topic_id;
+    public void setTopicId(String topicId) {
+        this.topicId = topicId;
     }
 
-    public String getTopic_name() {
-        return topic_name;
+    public String getTopicName() {
+        return topicName;
     }
 
-    public void setTopic_name(String topic_name) {
-        this.topic_name = topic_name;
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
     }
 
-    public int getTopic_status() {
-        return topic_status;
+    public int getStatus() {
+        return status;
     }
 
-    public void setTopic_status(int topic_status) {
-        this.topic_status = topic_status;
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

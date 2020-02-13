@@ -112,4 +112,13 @@ public class TopicController {
         }
         return "redirect:/techmain";
     }
+
+    @GetMapping("/applyrefuse/{id}")
+    public String applyRefuse(@PathVariable("id") Integer id, HttpSession session, RedirectAttributes attr){
+        if(id!=null && !"".equals(id)){
+            Teacher teacher = (Teacher) session.getAttribute("user");
+            TopicSelectService.updateStatusById1(id);
+        }
+        return "redirect:/techmain";
+    }
 }

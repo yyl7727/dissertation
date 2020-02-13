@@ -34,6 +34,12 @@ public class TopicSelectImpl implements TopicSelectService {
         topicSelectRepository.updateStatusById(id);
     }
 
+    @Transactional
+    @Override
+    public void updateStatusById1(Integer id) {
+        topicSelectRepository.updateStatusById1(id);
+    }
+
     @Override
     public TopicSelect findById(Integer id) {
         return topicSelectRepository.findById(id).get();

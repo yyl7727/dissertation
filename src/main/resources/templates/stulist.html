@@ -67,7 +67,7 @@
                                     <td th:text="未审批"></td>
                                     <td>
                                         <a class="btn btn-sm round btn-outline-success" th:href="@{|/applyapproval/${topicSelect.getId()}|}">同意</a>
-                                        <a class="btn btn-sm round btn-outline-danger">拒绝</a>
+                                        <a class="btn btn-sm round btn-outline-danger" th:href="@{|/applyrefuse/${topicSelect.getId()}|}">拒绝</a>
                                     </td>
                                 </tr>
                             </tbody>

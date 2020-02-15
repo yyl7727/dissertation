@@ -34,6 +34,8 @@ public class UserController {
     private TeacherService teacherService;
     @Autowired
     private TopicSelectService topicSelectService;
+    @Autowired
+    private NoticeService noticeService;
 
     //登录类型常量
     /**
@@ -158,14 +160,14 @@ public class UserController {
                 userService.update(u);
                 session.setAttribute("user",u);
                 //跳转到学生登录首页
-                return "stumain";
+                return "redirect:stumain";
             }
         }else if(userLogin.getType().equals(TYPETEACHER)){
             if(teacherService.checkTeacher(userLogin).equals("0")){
                 teacher = teacherService.findTeacherByAccount(userLogin.getAccount());
                 session.setAttribute("user",teacher);
                 //跳转到教师主页
-                return "techmain";
+                return "redirect:techmain";
             }
         }else{
             attr.addFlashAttribute("fail","登录失败");
@@ -176,8 +178,21 @@ public class UserController {
     }
 
     @GetMapping("/techmain")
-    public String teacherMain(){
+    public String teacherMain(Model model, HttpSession session){
+        Teacher teacher = (Teacher) session.getAttribute("user");
+        teacher = teacherService.findTeacherByAccount(teacher.getAccount());
+        List<Notice> noticeList = noticeService.findByGetUserAccount(teacher.getAccount());
+        model.addAttribute("noticeList", noticeList);
         return "techmain";
+    }
+
+    @GetMapping("/stumain")
+    public String studentMain(Model model, HttpSession session){
+        Users student = (Users) session.getAttribute("user");
+        student = userService.findUsersByAccount(student.getAccount());
+        List<Notice> noticeList = noticeService.findByGetUserAccount(student.getAccount());
+        model.addAttribute("noticeList", noticeList);
+        return "stumain";
     }
 
     @GetMapping("/teacherinfo")

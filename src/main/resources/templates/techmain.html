@@ -4,15 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
-    <title>CoinDash - Cryptocurrency Dashboard Admin Template</title>
-    <!-- Custom CSS -->
-
+    <title>论文管理系统-教师主页</title>
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <style>
         #myframe{
@@ -36,7 +32,7 @@
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
                 <!-- Logo -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" th:href="@{techmain}">
                         <!-- Logo icon -->
                         <b><img src="images/logo.png" alt="homepage" class="dark-logo" /></b>
                         <!--End Logo icon -->
@@ -46,162 +42,34 @@
                 </div>
                 <!-- End Logo -->
                 <div class="navbar-collapse">
-                    <!-- toggle and nav items -->
                     <ul class="navbar-nav mr-auto mt-md-0">
-                        <!-- This is  -->
                         <li class="nav-item"> <a class="nav-link toggle-nav hidden-md-up text-muted  " href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
                         <li class="nav-item m-l-10"> <a class="nav-link sidebartoggle hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
                         <!-- Messages -->
-                        <li class="nav-item dropdown mega-menu"> <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-wallet m-r-5"></i> Wallet</a>
-                            <div class="dropdown-menu animated slideInDown">
-                                <ul class="mega-menu-menu row">
-                                    <li class="col-lg-3  m-b-30">
-                                        <h4 class="m-b-20">Bitcoin BTC</h4>
-                                        <!-- Contact -->
-                                        <ul class="list-style-none">
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="col-lg-3 col-xlg-3 m-b-30">
-                                        <h4 class="m-b-20">Bitcoin BTC</h4>
-                                        <!-- List style -->
-                                        <ul class="list-style-none">
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="col-lg-3 col-xlg-3 m-b-30">
-                                        <h4 class="m-b-20">Bitcoin BTC</h4>
-                                        <!-- List style -->
-                                        <ul class="list-style-none">
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="col-lg-3 col-xlg-3 m-b-30">
-                                        <h4 class="m-b-20">Bitcoin BTC</h4>
-                                        <!-- List style -->
-                                        <ul class="list-style-none">
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                            <li><a href="#"><i class="cc BTC"></i> Bitcoin Transaction</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- End Messages -->
+                        <li class="nav-item dropdown mega-menu"></li>
                     </ul>
-
-
-                    <!-- User profile and search -->
                     <ul class="navbar-nav my-lg-0">
-                        <!-- Comment -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-bell"></i>
-                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right mailbox animated slideInRight">
-                                <ul>
-                                    <li>
-                                        <div class="drop-title">Notifications</div>
-                                    </li>
-                                    <li>
-                                        <div class="header-notify">
-                                            <!-- Message -->
-                                            <a href="#">
-                                                <i class="cc BTC m-r-10 f-s-40" title="BTC"></i>
-
-                                                <div class="notification-contnet">
-                                                    <h5>All Transaction BTC</h5> <span class="mail-desc">Just see the my new admin!</span>
-                                                </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="#">
-                                                <i class="cc LTC m-r-10 f-s-40" title="BTC"></i>
-                                                <div class="notification-contnet">
-                                                    <h5>This is LTC coin</h5> <span class="mail-desc">Just a reminder that you have event</span>
-                                                </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="#">
-                                                <i class="cc DASH m-r-10 f-s-40" title="BTC"></i>
-                                                <div class="notification-contnet">
-                                                    <h5>This is DASH coin</h5> <span class="mail-desc">You can customize this template as you want</span>
-                                                </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="#">
-                                                <i class="cc XRP m-r-10 f-s-40" title="BTC"></i>
-                                                <div class="notification-contnet">
-                                                    <h5>This is LTC coin</h5> <span class="mail-desc">Just see the my admin!</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link text-center" href="javascript:void(0);"> Check all notifications <i class="fa fa-angle-right"></i> </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- End Comment -->
-                        <!-- Messages -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted  " href="#" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-envelope"></i>
-                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                                <div class="notify"> <span th:if="${noticeList.size()>0}" class="heartbit"></span> <span th:if="${noticeList.size()>0}" class="point"></span> </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mailbox animated slideInRight" aria-labelledby="2">
                                 <ul>
                                     <li>
-                                        <div class="drop-title">You have 4 new messages</div>
+                                        <div class="drop-title" style="color: black">你有 <span th:text="${noticeList.size()}"></span> 个新消息</div>
                                     </li>
                                     <li>
-                                        <div class="header-notify">
+                                        <div class="header-notify" th:each="notice: ${noticeList}">
                                             <!-- Message -->
                                             <a href="#">
-
                                                 <div class="notification-contnet">
-                                                    <h5>Michael Qin</h5> <span class="mail-desc">Just see the my admin!</span>
-                                                </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="#">
-
-                                                <div class="notification-contnet">
-                                                    <h5>John Doe</h5> <span class="mail-desc">I've sung a song! See you at</span>
-                                                </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="#">
-
-                                                <div class="notification-contnet">
-                                                    <h5>Mr. John</h5> <span class="mail-desc">I am a singer!</span>
-                                                </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="#">
-
-                                                <div class="notification-contnet">
-                                                    <h5>Michael Qin</h5> <span class="mail-desc">Just see the my admin!</span>
+                                                    <h5 th:text="${notice.getSendSubject()}"></h5> <span class="mail-desc" th:text="${notice.getSendContent()}"></span>
                                                 </div>
                                             </a>
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="nav-link text-center" href="javascript:void(0);"> See all e-Mails <i class="fa fa-angle-right"></i> </a>
+                                        <a class="nav-label text-center" href="javascript:void(0);"> 查看所有消息 <i class="fa fa-angle-right"></i> </a>
                                     </li>
                                 </ul>
                             </div>
@@ -214,12 +82,10 @@
                                 <ul class="dropdown-user">
                                     <li role="separator" class="divider"></li>
                                     <li><a th:href="@{teacherinfo}" target="myframe">个人信息</a></li>
-                                    <li><a href="#"> Balance</a></li>
-                                    <li><a href="#"> Inbox</a></li>
+<!--                                    <li role="separator" class="divider"></li>-->
+<!--                                    <li><a href="#"> Setting</a></li>-->
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"> Setting</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#"> Logout</a></li>
+                                    <li><a th:href="@{login}">退出登录</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -256,11 +122,10 @@
                             </ul>
                         </li>
                         <li class="nav-label">Apps &amp; Charts</li>
-                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">Mailbox</span></a>
+                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">消息管理</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="email-compose.html">Compose</a></li>
-                                <li><a href="email-read.html">Read</a></li>
-                                <li><a href="email-inbox.html">Inbox</a></li>
+                                <li><a th:href="@{noticesendtostudent}" target="myframe">发送邮件</a></li>
+                                <li><a href="email-read.html">消息中心</a></li>
                             </ul>
                         </li>
                         <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-bar-chart"></i><span class="hide-menu">Charts</span></a>
@@ -384,22 +249,14 @@
         </div>
         <!-- End Page wrapper  -->
     </div>
-    <!-- End Wrapper -->
-    <!-- All Jquery -->
     <script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
-    <!-- Bootstrap tether Core JavaScript -->
     <script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
     <script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
     <script th:src="@{/js/jquery.slimscroll.js}"></script>
-    <!--Menu sidebar -->
     <script th:src="@{/js/sidebarmenu.js}"></script>
-    <!--stickey kit -->
     <script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
-    <!--Custom JavaScript -->
     <script th:src="@{/js/lib/webticker/jquery.webticker.min.js}"></script>
     <script th:src="@{/js/lib/peitychart/jquery.peity.min.js}"></script>
-    <!-- scripit init-->
     <script th:src="@{/js/custom.min.js}"></script>
     <script th:src="@{/js/dashboard-1.js}"></script>
 </body>

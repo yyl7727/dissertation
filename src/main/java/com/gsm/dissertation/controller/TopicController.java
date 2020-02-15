@@ -3,9 +3,9 @@ package com.gsm.dissertation.controller;
 
 import com.gsm.dissertation.dao.ParameterRepository;
 import com.gsm.dissertation.dao.TopicReleaseRepository;
-import com.gsm.dissertation.dao.TopicSelectRepository;
 import com.gsm.dissertation.model.*;
 import com.gsm.dissertation.service.GuideTeacherService;
+import com.gsm.dissertation.service.NoticeService;
 import com.gsm.dissertation.service.TopicSelectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +30,8 @@ public class TopicController {
     TopicSelectService TopicSelectService;
     @Autowired
     GuideTeacherService guideTeacherService;
+    @Autowired
+    NoticeService noticeService;
 
     @GetMapping("/topicrelease")
     public String stuList(Model model){
@@ -43,7 +45,7 @@ public class TopicController {
     public String stuList(TopicRelease topicRelease, HttpSession session, RedirectAttributes attr){
         try{
             //课题名称不为空时
-            if (topicRelease.getTopicName()!=""){
+            if (!"".equals(topicRelease.getTopicName())){
                 topicRelease.setT_status("0");
                 Teacher teacher = (Teacher) session.getAttribute("user");
                 topicRelease.setTeacherAccount(teacher.getAccount());
@@ -96,11 +98,12 @@ public class TopicController {
     }
 
     @GetMapping("/applyapproval/{id}")
-    public String applyApproval(@PathVariable("id") Integer id, HttpSession session, RedirectAttributes attr){
-        if(id!=null && !"".equals(id)){
+    public String applyApproval(@PathVariable("id") Integer id, HttpSession session){
+        if(id!=null){
             Teacher teacher = (Teacher) session.getAttribute("user");
             TopicSelectService.updateStatusById(id);
             TopicSelect topicSelect = TopicSelectService.findById(id);
+            //同意审批后添加学生的选题信息到指导教师表
             GuideTeacher guideTeacher=new GuideTeacher();
             guideTeacher.setTeacherAccount(teacher.getAccount());
             guideTeacher.setTeacherName(teacher.getName());
@@ -108,16 +111,44 @@ public class TopicController {
             guideTeacher.setStudentName(topicSelect.getStudentName());
             guideTeacher.setTopicId(topicSelect.getTopicId());
             guideTeacher.setTopicName(topicSelect.getTopicName());
-            //guideTeacherService
+            guideTeacher.setStatus(0);
+            guideTeacherService.save(guideTeacher);
+            //向学生发送通知
+            Notice notice = new Notice();
+            notice.setGetUserAccount(topicSelect.getStudentAccount());
+            notice.setGetUserName(topicSelect.getStudentName());
+            notice.setSendUserAccount(teacher.getAccount());
+            notice.setSendUserName(teacher.getName());
+            notice.setSendSubject("选题成功");
+            notice.setSendContent("教师通过你的论题申请！");
+            LocalDateTime dateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+            notice.setSendTime(dateTime.format(formatter));
+            notice.setStatus("0");
+            noticeService.save(notice);
         }
         return "redirect:/techmain";
     }
 
     @GetMapping("/applyrefuse/{id}")
-    public String applyRefuse(@PathVariable("id") Integer id, HttpSession session, RedirectAttributes attr){
+    public String applyRefuse(@PathVariable("id") Integer id, HttpSession session){
         if(id!=null && !"".equals(id)){
             Teacher teacher = (Teacher) session.getAttribute("user");
             TopicSelectService.updateStatusById1(id);
+            TopicSelect topicSelect = TopicSelectService.findById(id);
+            //拒绝学生申请后向学生发送通知
+            Notice notice = new Notice();
+            notice.setGetUserAccount(topicSelect.getStudentAccount());
+            notice.setGetUserName(topicSelect.getStudentName());
+            notice.setSendUserAccount(teacher.getAccount());
+            notice.setSendUserName(teacher.getName());
+            notice.setSendSubject("选题失败");
+            notice.setSendContent("教师拒绝了你的论题申请！");
+            LocalDateTime dateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+            notice.setSendTime(dateTime.format(formatter));
+            notice.setStatus("0");
+            noticeService.save(notice);
         }
         return "redirect:/techmain";
     }

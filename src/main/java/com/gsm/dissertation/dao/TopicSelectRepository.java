@@ -16,7 +16,7 @@ public interface TopicSelectRepository extends JpaRepository<TopicSelect, Intege
     List<TopicSelect> findByTeacher(String account);
 
     @Modifying
-    @Query("update TopicSelect t set t.status='0' where t.id=?1")
+    @Query("update TopicSelect t set t.status='1' where t.id=?1")
     void updateStatusById(Integer id);
 
     @Modifying

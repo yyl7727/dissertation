@@ -21,18 +21,15 @@
                                     <tr>
                                         <th>学号</th>
                                         <th>姓名</th>
-                                        <th>论文选题状态</th>
+                                        <th>论题</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr th:each="guideTeacher: ${guideTeacherList}">
                                         <!-- 以选题学生用绿色显示class：text-success，未选题用红色显示class：text-danger -->
-                                        <td class="text-success" th:if="${guideTeacher.getStatus() == 0}" th:text="${guideTeacher.getStudentAccount()}"></td>
-                                        <td class="text-danger" th:unless="${guideTeacher.getStatus() == 0}" th:text="${guideTeacher.getStudentAccount()}"></td>
-                                        <td class="text-success" th:if="${guideTeacher.getStatus() == 0}" th:text="${guideTeacher.getStudentName()}"></td>
-                                        <td class="text-danger" th:unless="${guideTeacher.getStatus() == 0}" th:text="${guideTeacher.getStudentName()}"></td>
-                                        <td class="text-success" th:if="${guideTeacher.getStatus() == 0}">已选题</td>
-                                        <td class="text-danger" th:unless="${guideTeacher.getStatus() == 0}">未选题</td>
+                                        <td class="text-success" th:text="${guideTeacher.getStudentAccount()}"></td>
+                                        <td class="text-success" th:text="${guideTeacher.getStudentName()}"></td>
+                                        <td class="text-success" th:text="${guideTeacher.getTopicName()}"></td>
                                     </tr>
                                 </tbody>
                             </table>

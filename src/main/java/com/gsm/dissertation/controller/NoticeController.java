@@ -100,4 +100,12 @@ public class NoticeController {
         }
         return "redirect:/noticesendtoteacher";
     }
+
+    @GetMapping("/noticecenterstudent")
+    public String noticeCenterStudent(Model model, HttpSession session){
+        Users student = (Users)session.getAttribute("user");
+        List<Notice> noticeList = noticeService.findAllByGetUserAccount(student.getAccount());
+        model.addAttribute("noticeList",noticeList);
+        return "noticecenterstudent";
+    }
 }

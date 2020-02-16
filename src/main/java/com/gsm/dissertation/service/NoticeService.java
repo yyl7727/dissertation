@@ -10,4 +10,6 @@ public interface NoticeService {
     List<Notice> findByGetUserAccount(String getUserAccount);
 
     void updateById(Integer id);
+
+    List<Notice> findAllByGetUserAccount(String getUserAccount);
 }

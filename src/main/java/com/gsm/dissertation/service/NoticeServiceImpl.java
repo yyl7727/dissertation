@@ -26,4 +26,9 @@ public class NoticeServiceImpl implements NoticeService {
     public void save(Notice notice) {
         noticeRepository.save(notice);
     }
+
+    @Override
+    public List<Notice> findAllByGetUserAccount(String getUserAccount) {
+        return noticeRepository.findAllByGetUserAccount(getUserAccount);
+    }
 }

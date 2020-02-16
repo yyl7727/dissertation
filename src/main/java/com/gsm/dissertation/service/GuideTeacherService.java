@@ -14,4 +14,6 @@ public interface GuideTeacherService {
     List<GuideTeacher> getGuideTeacherByAccount(String account);
 
     void save(GuideTeacher guideTeacher);
+
+    List<GuideTeacher> getGuideTeacherByStudentAccount(String account);
 }

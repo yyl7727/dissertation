@@ -27,4 +27,10 @@ public class GuideTeacherServiceImpl implements GuideTeacherService {
     public void save(GuideTeacher guideTeacher) {
         guideTeacherRepository.save(guideTeacher);
     }
+
+    @Override
+    public List<GuideTeacher> getGuideTeacherByStudentAccount(String account) {
+        List<GuideTeacher> list_GuideTeacher = guideTeacherRepository.getGuideTeacherByStudentAccount(account);
+        return list_GuideTeacher;
+    }
 }

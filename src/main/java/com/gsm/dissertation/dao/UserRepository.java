@@ -1,6 +1,5 @@
 package com.gsm.dissertation.dao;
 
-import com.gsm.dissertation.model.Teacher;
 import com.gsm.dissertation.model.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

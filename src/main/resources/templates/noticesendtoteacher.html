@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
+    <title>发送邮件</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-content">
+                        <div class="row">
+                            <!-- Left sidebar -->
+                            <div class="col-lg-3">
+                                <div class="mt-4 ml-3">
+                                    <div class="mail-list">
+                                        <a style="color: black" class="list-group-item border-0 active" href="#"><i class="mdi mdi-send font-18 align-middle mr-2"></i>Send</a>
+                                        <br>
+                                        <label class="label label-custom">选择你的指导教师以快捷发送</label>
+                                        <select id="myStudent" class="form-control" th:each="guideTeacher: ${guideTeacherList}" onchange="sele_Change()">
+                                            <option></option>
+                                            <option th:value="${guideTeacher.getTeacherAccount()}" th:text="${guideTeacher.getTeacherName()}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="mt-4">
+                                    <form th:action="@{/noticesendtoteacher}" th:object="${notice}" method="POST">
+                                        <div class="form-group">
+                                            <input id="email" class="form-control" th:field="*{getUserAccount}" placeholder="发送给..">
+                                            <input id="techname" hidden="hidden" th:field="*{getUserName}" text="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" th:field="*{sendSubject}" placeholder="邮件主题">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea name="name" rows="8" cols="80" class="form-control" style="height:300px" th:field="*{sendContent}" placeholder="邮件内容"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-success btn-flat btn-lg btn-block">发送邮件</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function sele_Change(){
+        var account = $("#myStudent").val();
+        var name = $("#myStudent").text();
+        $("#techname").val(name.trim());
+        $("#email").val(account.trim());
+    }
+</script>
+<script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.slimscroll.js}"></script>
+<script th:src="@{/js/sidebarmenu.js}"></script>
+<script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+<script th:src="@{/js/custom.min.js}"></script>
+</body>
+</html>

@@ -82,8 +82,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Users findUsersByAccount(String account) {
-        Users student = userRepository.findStuByAccount(account).get();
-        return student;
+        try {
+            Users student = userRepository.findStuByAccount(account).get();
+            return student;
+        }catch (Exception ex){
+            return new Users();
+        }
     }
 
     @Override

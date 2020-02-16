@@ -108,4 +108,12 @@ public class NoticeController {
         model.addAttribute("noticeList",noticeList);
         return "noticecenterstudent";
     }
+
+    @GetMapping("/noticecenterteacher")
+    public String noticeCenterTeacher(Model model, HttpSession session){
+        Teacher teacher = (Teacher)session.getAttribute("user");
+        List<Notice> noticeList = noticeService.findAllByGetUserAccount(teacher.getAccount());
+        model.addAttribute("noticeList",noticeList);
+        return "noticecenterstudent";
+    }
 }

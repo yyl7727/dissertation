@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
+    <title>Title</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="mt-4 ml-3">
+                                    <div class="mail-list mt-4">
+                                        <a class="list-group-item border-0 text-danger active" th:href="@{noticecenterteacher}"><i class="mdi mdi-inbox font-18 align-middle mr-2"></i><b>消息中心</b></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="">
+                                    <div class="mt-4">
+                                        <div class="">
+                                            <ul class="message-list">
+                                                    <span th:each="notice : ${noticeList}">
+                                                        <li class="unread" th:if="${notice.status=='0'}">
+                                                            <a href="email-read.html">
+                                                                <div class="row">
+                                                                    <div class="col-8 col-xl-3 d-flex align-items-top">
+                                                                        <span class="text-nowrap"><strong th:text="${notice.sendUserName}"></strong></span>
+                                                                    </div>
+                                                                    <div class="col-4 col-xl-2 text-right order-xl-3">
+                                                                        <div class="date mr-2" th:text="${notice.sendTime}"></div>
+                                                                    </div>
+                                                                    <div class="col-12 col-xl-7">
+                                                                        <div class="subject" th:text="${notice.sendSubject}"></div>
+                                                                        <div class="content" th:text="${notice.sendContent}"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                        <li class="read" th:if="${notice.status!='0'}">
+                                                            <a href="email-read.html">
+                                                                <div class="row">
+                                                                    <div class="col-8 col-xl-3 d-flex align-items-top">
+                                                                        <span class="text-nowrap"><strong th:text="${notice.sendUserName}"></strong></span>
+                                                                    </div>
+                                                                    <div class="col-4 col-xl-2 text-right order-xl-3">
+                                                                        <div class="date mr-2" th:text="${notice.sendTime}"></div>
+                                                                    </div>
+                                                                    <div class="col-12 col-xl-7">
+                                                                        <div class="subject" th:text="${notice.sendSubject}"></div>
+                                                                        <div class="content" th:text="${notice.sendContent}"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                    </span>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.slimscroll.js}"></script>
+<script th:src="@{/js/sidebarmenu.js}"></script>
+<script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+<script th:src="@{/js/custom.min.js}"></script>
+</body>
+</html>

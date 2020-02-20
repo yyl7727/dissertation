@@ -28,7 +28,7 @@
                                             <ul class="message-list">
                                                     <span th:each="notice : ${noticeList}">
                                                         <li class="unread" th:if="${notice.status=='0'}">
-                                                            <a href="email-read.html">
+                                                            <a th:href="@{|/noticereadteacher/${notice.getId()}|}">
                                                                 <div class="row">
                                                                     <div class="col-8 col-xl-3 d-flex align-items-top">
                                                                         <span class="text-nowrap"><strong th:text="${notice.sendUserName}"></strong></span>
@@ -44,7 +44,7 @@
                                                             </a>
                                                         </li>
                                                         <li class="read" th:if="${notice.status!='0'}">
-                                                            <a href="email-read.html">
+                                                            <a th:href="@{|/noticereadteacher/${notice.getId()}|}">
                                                                 <div class="row">
                                                                     <div class="col-8 col-xl-3 d-flex align-items-top">
                                                                         <span class="text-nowrap"><strong th:text="${notice.sendUserName}"></strong></span>

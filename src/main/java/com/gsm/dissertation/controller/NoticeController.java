@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -114,6 +115,16 @@ public class NoticeController {
         Teacher teacher = (Teacher)session.getAttribute("user");
         List<Notice> noticeList = noticeService.findAllByGetUserAccount(teacher.getAccount());
         model.addAttribute("noticeList",noticeList);
-        return "noticecenterstudent";
+        return "noticecenterteacher";
+    }
+
+    @GetMapping({"/noticereadteacher","/noticereadteacher/{id}"})
+    public String noticeReadTeacher(@PathVariable("id") Integer id, Model model, HttpSession session){
+        if (id != null){
+            noticeService.updateById(id);
+            Notice notice = noticeService.findById(id);
+            model.addAttribute("notice",notice);
+        }
+        return "noticereadteacher";
     }
 }

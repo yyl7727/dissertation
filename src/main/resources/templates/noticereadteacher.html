@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
+    <title>Title</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="mt-4 ml-3">
+                                        <div class="mail-list">
+                                            <a class="list-group-item border-0 active" href="#"><i class="mdi mdi-file-document-box font-18 align-middle mr-2"></i>阅读</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="inbox-content mt-4 mb-4" th:object="${notice}">
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-success">回复</button>
+                                        </div>
+                                        <h3 th:text="${notice.sendSubject}"></h3>
+                                        <small class="text-muted" th:text="${notice.sendUserName}+' <'+${notice.sendUserAccount}+'>'"></small>
+                                        <hr/>
+                                        <p th:text="${notice.sendContent}"></p>
+                                        <hr/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.slimscroll.js}"></script>
+    <script th:src="@{/js/sidebarmenu.js}"></script>
+    <script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+    <script th:src="@{/js/custom.min.js}"></script>
+</body>
+</html>

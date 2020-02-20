@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -30,5 +31,14 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public List<Notice> findAllByGetUserAccount(String getUserAccount) {
         return noticeRepository.findAllByGetUserAccount(getUserAccount);
+    }
+
+    @Override
+    public Notice findById(Integer id) {
+        if (noticeRepository.findById(id).isPresent()){
+            return noticeRepository.findById(id).get();
+        }else {
+            return new Notice();
+        }
     }
 }

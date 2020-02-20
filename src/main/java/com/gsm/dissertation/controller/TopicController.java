@@ -132,7 +132,7 @@ public class TopicController {
 
     @GetMapping("/applyrefuse/{id}")
     public String applyRefuse(@PathVariable("id") Integer id, HttpSession session){
-        if(id!=null && !"".equals(id)){
+        if(id!=null){
             Teacher teacher = (Teacher) session.getAttribute("user");
             TopicSelectService.updateStatusById1(id);
             TopicSelect topicSelect = TopicSelectService.findById(id);

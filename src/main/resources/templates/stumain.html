@@ -50,7 +50,7 @@
                                     </li>
                                     <li>
                                         <div class="header-notify">
-                                            <a href="#" th:each="notice: ${noticeList}">
+                                            <a th:each="notice: ${noticeList}" th:href="@{|/noticereadstudent/${notice.getId()}|}" target="myframe">
                                                 <div class="notification-contnet">
                                                     <h5 th:text="${notice.getSendSubject()}"></h5> <span class="mail-desc" th:text="${notice.getSendContent()}"></span>
                                                 </div>

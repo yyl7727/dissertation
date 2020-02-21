@@ -25,27 +25,19 @@
 </head>
 
 <body class="header-fix fix-sidebar">
-    <!-- Main wrapper  -->
     <div id="main-wrapper">
-        <!-- header header  -->
         <div class="header">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <!-- Logo -->
                 <div class="navbar-header">
                     <a class="navbar-brand" th:href="@{techmain}">
-                        <!-- Logo icon -->
                         <b><img src="images/logo.png" alt="homepage" class="dark-logo" /></b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
                         <span><img src="images/logo-text.png" alt="homepage" class="dark-logo" /></span>
                     </a>
                 </div>
-                <!-- End Logo -->
                 <div class="navbar-collapse">
                     <ul class="navbar-nav mr-auto mt-md-0">
                         <li class="nav-item"> <a class="nav-link toggle-nav hidden-md-up text-muted  " href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
                         <li class="nav-item m-l-10"> <a class="nav-link sidebartoggle hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
-                        <!-- Messages -->
                         <li class="nav-item dropdown mega-menu"></li>
                     </ul>
                     <ul class="navbar-nav my-lg-0">
@@ -59,9 +51,9 @@
                                         <div class="drop-title" style="color: black">你有 <span th:text="${noticeList.size()}"></span> 个新消息</div>
                                     </li>
                                     <li>
-                                        <div class="header-notify" th:each="notice: ${noticeList}">
-                                            <!-- Message -->
-                                            <a href="#">
+                                        <div class="header-notify">
+
+                                            <a th:each="notice: ${noticeList}" th:href="@{|/noticereadteacher/${notice.getId()}|}" target="myframe">
                                                 <div class="notification-contnet">
                                                     <h5 th:text="${notice.getSendSubject()}"></h5> <span class="mail-desc" th:text="${notice.getSendContent()}"></span>
                                                 </div>
@@ -74,8 +66,6 @@
                                 </ul>
                             </div>
                         </li>
-                        <!-- End Messages -->
-                        <!-- Profile -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i></a>
                             <div class="dropdown-menu dropdown-menu-right animated slideInRight">
@@ -93,12 +83,8 @@
                 </div>
             </nav>
         </div>
-        <!-- End header header -->
-        <!-- Left Sidebar  -->
         <div class="left-sidebar">
-            <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
-                <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebar-menu">
                         <li class="nav-devider"></li>
@@ -220,34 +206,19 @@
                         </li>
                     </ul>
                 </nav>
-                <!-- End Sidebar navigation -->
             </div>
-            <!-- End Sidebar scroll-->
         </div>
-        <!-- End Left Sidebar  -->
-        <!-- Page wrapper  -->
         <div class="page-wrapper">
-            <!-- Bread crumb -->
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
                     <h3 class="text-primary">教师主页</h3> </div>
             </div>
-            <!-- End Bread crumb -->
-            <!-- Container fluid  -->
             <div class="container-fluid">
-                <!-- Start Page Content -->
-                <!-- /# row -->
                 <iframe id="myframe" name="myframe" class="container-fluid" th:src="@{/stulist}">
-
                 </iframe>
-                <!-- End PAge Content -->
             </div>
-            <!-- End Container fluid  -->
-            <!-- footer -->
             <footer class="footer"> All Rights Reserved © Kunming University of Science and Technology Oxbridge College.</footer>
-            <!-- End footer -->
         </div>
-        <!-- End Page wrapper  -->
     </div>
     <script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
     <script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
@@ -260,5 +231,4 @@
     <script th:src="@{/js/custom.min.js}"></script>
     <script th:src="@{/js/dashboard-1.js}"></script>
 </body>
-
 </html>

@@ -127,4 +127,14 @@ public class NoticeController {
         }
         return "noticereadteacher";
     }
+
+    @GetMapping({"/noticereadstudent","/noticereadstudent/{id}"})
+    public String noticeReadStudent(@PathVariable("id") Integer id, Model model, HttpSession session){
+        if (id != null){
+            noticeService.updateById(id);
+            Notice notice = noticeService.findById(id);
+            model.addAttribute("notice",notice);
+        }
+        return "noticereadstudent";
+    }
 }

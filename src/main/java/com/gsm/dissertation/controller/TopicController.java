@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -151,5 +153,25 @@ public class TopicController {
             noticeService.save(notice);
         }
         return "redirect:/techmain";
+    }
+
+    @GetMapping("/topicupload")
+    public String topicUpload(){
+        return "topicupload";
+    }
+
+    @PostMapping("/topicupload")
+    public String topicUploads(@RequestParam("file") MultipartFile file, Model model, HttpSession session){
+        //判断文件是否为空
+        if (file.isEmpty()) {
+            return "redirect:/topicupload";
+        }
+        Users student = (Users) session.getAttribute("user");
+        String fileName = file.getOriginalFilename();
+
+        String saveFile = System.getProperty("user.dir");
+        saveFile +="\\src\\main\\resources\\"+student.getAccount();
+        if (saveFile)
+        return "redirect:/topicupload";
     }
 }

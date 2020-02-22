@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
+    <title></title>
+    <link th:href="@{/css/lib/dropzone/dropzone.css}" rel="stylesheet">
+    <link th:href="@{/css/lib/bootstrap/bootstrap.min.css}" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">文件上传</h4>
+                        <h6 class="card-subtitle">将文件拖拽至此上传..</h6>
+                        <form th:action="@{/topicupload}" method="post" class="dropzone" enctype="multipart/form-data">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple />
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-flat">提交</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+    <script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.slimscroll.js}"></script>
+    <script th:src="@{/js/sidebarmenu.js}"></script>
+    <script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+    <script th:src="@{/js/custom.min.js}"></script>
+    <script th:src="@{/js/lib/dropzone/dropzone.js}"></script>
+</body>
+</html>

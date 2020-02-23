@@ -7,6 +7,7 @@ import com.gsm.dissertation.model.*;
 import com.gsm.dissertation.service.GuideTeacherService;
 import com.gsm.dissertation.service.NoticeService;
 import com.gsm.dissertation.service.TopicSelectService;
+import com.gsm.dissertation.service.TopicUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -34,6 +37,8 @@ public class TopicController {
     GuideTeacherService guideTeacherService;
     @Autowired
     NoticeService noticeService;
+    @Autowired
+    TopicUploadService topicUploadService;
 
     @GetMapping("/topicrelease")
     public String stuList(Model model){
@@ -167,11 +172,29 @@ public class TopicController {
             return "redirect:/topicupload";
         }
         Users student = (Users) session.getAttribute("user");
-        String fileName = file.getOriginalFilename();
+        Integer uploadTime = topicUploadService.getUploadCountByStudentAccount(student.getAccount())+1;
 
-        String saveFile = System.getProperty("user.dir");
-        saveFile +="\\src\\main\\resources\\"+student.getAccount();
-        if (saveFile)
+        String fileName = file.getOriginalFilename();
+        String savePath = "D:\\dissertation\\" + student.getAccount()+"\\"+uploadTime;
+        String saveFile = savePath + "\\" + fileName;
+        File file1 = new File(saveFile);
+        //判断文件父目录是否存在
+        if (!file1.getParentFile().exists()) {
+            file1.getParentFile().mkdirs();
+        }
+        try {
+            file.transferTo(file1); //保存文件
+        } catch (IOException e) {
+            model.addAttribute("error", "保存错误，错误信息:"+e.getMessage());
+            return "redirect:/topicupload";
+        }
+        TopicUpload topicUpload = new TopicUpload();
+        topicUpload.setStudentAccount(student.getAccount());
+        topicUpload.setStudentName(student.getName());
+        topicUpload.setUploadPath(saveFile);
+        topicUpload.setUploadTime(uploadTime);
+        topicUploadService.save(topicUpload);
+        model.addAttribute("ok", "保存成功");
         return "redirect:/topicupload";
     }
 }

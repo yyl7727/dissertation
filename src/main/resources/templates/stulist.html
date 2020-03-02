@@ -43,32 +43,34 @@
                 <div class="card-title">
                     <h4>待审批列表</h4></div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-de mb-0">
-                            <thead>
-                                <tr>
-                                    <th>申请日期</th>
-                                    <th>论题名称</th>
-                                    <th>学生姓名</th>
-                                    <th>指导教师</th>
-                                    <th>审批状态</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="topicSelect: ${topicSelectList}">
-                                    <td th:text="${topicSelect.getApplyTime()}"></td>
-                                    <td th:text="${topicSelect.getTopicName()}"></td>
-                                    <td th:text="${topicSelect.getStudentName()}"></td>
-                                    <td th:text="${topicSelect.getTeacherName()}"></td>
-                                    <td th:text="未审批"></td>
-                                    <td>
-                                        <a class="btn btn-sm round btn-outline-success" th:href="@{|/applyapproval/${topicSelect.getId()}|}">同意</a>
-                                        <a class="btn btn-sm round btn-outline-danger" th:href="@{|/applyrefuse/${topicSelect.getId()}|}">拒绝</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="trade-history-table">
+                        <div class="table-responsive">
+                            <table class="table table-de mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>申请日期</th>
+                                        <th>论题名称</th>
+                                        <th>学生姓名</th>
+                                        <th>指导教师</th>
+                                        <th>审批状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="topicSelect: ${topicSelectList}">
+                                        <td th:text="${topicSelect.getApplyTime()}"></td>
+                                        <td th:text="${topicSelect.getTopicName()}"></td>
+                                        <td th:text="${topicSelect.getStudentName()}"></td>
+                                        <td th:text="${topicSelect.getTeacherName()}"></td>
+                                        <td th:text="未审批"></td>
+                                        <td>
+                                            <a class="btn btn-sm round btn-outline-success" th:href="@{|/applyapproval/${topicSelect.getId()}|}">同意</a>
+                                            <a class="btn btn-sm round btn-outline-danger" th:href="@{|/applyrefuse/${topicSelect.getId()}|}">拒绝</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,26 +80,30 @@
         <div class="col-12 col-xl-6">
             <div class="card">
                 <div class="card-title">
-                    <h4>Sell Order</h4>
+                    <h4>学生论文状态</h4>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-de mb-0">
-                            <thead>
-                            <tr>
-                                <th>学号</th>
-                                <th>姓名</th>
-                                <th>论文选题状态</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                    <div class="trade-history-table">
+                        <div class="table-responsive">
+                            <table class="table table-de mb-0">
+                                <thead>
                                 <tr>
-                                    <td>10583.4</td>
-                                    <td><i class="cc BTC"></i> 0.45000000</td>
-                                    <td>$ 4762.53</td>
+                                    <th>学号</th>
+                                    <th>姓名</th>
+                                    <th>论文提交次数</th>
+                                    <th>下载论文</th>
                                 </tr>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="topicUpload: ${topicUploadList}">
+                                        <td th:text="${topicUpload.getStudentAccount()}"></td>
+                                        <td th:text="${topicUpload.getStudentName()}"></td>
+                                        <td th:text="${'第'+topicUpload.getUploadTime()+'次'}"></td>
+                                        <td><a class="btn btn-sm round btn-outline-success">下载</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -108,48 +114,50 @@
                     <h4>Buy Order</h4>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-de mb-0">
-                            <thead>
-                            <tr>
-                                <th>Price per BTC</th>
-                                <th>BTC Ammount</th>
-                                <th>Total($)</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>10599.5</td>
-                                <td><i class="cc BTC"></i> 0.02000000</td>
-                                <td>$ 211.99</td>
-                            </tr>
-                            <tr>
-                                <td>10583.5</td>
-                                <td><i class="cc BTC"></i> 0.04000000</td>
-                                <td>$ 423.34</td>
-                            </tr>
-                            <tr>
-                                <td>10583.8</td>
-                                <td><i class="cc BTC"></i> 0.35000000</td>
-                                <td>$ 3704.33</td>
-                            </tr>
-                            <tr>
-                                <td>10595.7</td>
-                                <td><i class="cc BTC"></i> 0.30000000</td>
-                                <td>$ 3178.71</td>
-                            </tr>
-                            <tr>
-                                <td>10583.7</td>
-                                <td><i class="cc BTC"></i> 0.25100000</td>
-                                <td>$ 2656.51</td>
-                            </tr>
-                            <tr>
-                                <td>10595.8</td>
-                                <td><i class="cc BTC"></i> 0.29697926</td>
-                                <td>$ 3146.74</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div class="trade-history-table">
+                        <div class="table-responsive">
+                            <table class="table table-de mb-0">
+                                <thead>
+                                <tr>
+                                    <th>Price per BTC</th>
+                                    <th>BTC Ammount</th>
+                                    <th>Total($)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>10599.5</td>
+                                    <td><i class="cc BTC"></i> 0.02000000</td>
+                                    <td>$ 211.99</td>
+                                </tr>
+                                <tr>
+                                    <td>10583.5</td>
+                                    <td><i class="cc BTC"></i> 0.04000000</td>
+                                    <td>$ 423.34</td>
+                                </tr>
+                                <tr>
+                                    <td>10583.8</td>
+                                    <td><i class="cc BTC"></i> 0.35000000</td>
+                                    <td>$ 3704.33</td>
+                                </tr>
+                                <tr>
+                                    <td>10595.7</td>
+                                    <td><i class="cc BTC"></i> 0.30000000</td>
+                                    <td>$ 3178.71</td>
+                                </tr>
+                                <tr>
+                                    <td>10583.7</td>
+                                    <td><i class="cc BTC"></i> 0.25100000</td>
+                                    <td>$ 2656.51</td>
+                                </tr>
+                                <tr>
+                                    <td>10595.8</td>
+                                    <td><i class="cc BTC"></i> 0.29697926</td>
+                                    <td>$ 3146.74</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

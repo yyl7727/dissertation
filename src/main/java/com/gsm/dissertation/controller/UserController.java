@@ -36,6 +36,8 @@ public class UserController {
     private TopicSelectService topicSelectService;
     @Autowired
     private NoticeService noticeService;
+    @Autowired
+    private TopicUploadService topicUploadService;
 
     //登录类型常量
     /**
@@ -57,8 +59,17 @@ public class UserController {
         Teacher teacher = (Teacher)session.getAttribute("user");
         List<GuideTeacher> guideTeacherList = guideTeacherService.getGuideTeacherByAccount(teacher.getAccount());
         List<TopicSelect> topicSelectList = topicSelectService.findByTeacher(teacher.getAccount());
+        ArrayList<TopicUpload> topicUploadList = new ArrayList<TopicUpload>();
+        ArrayList<String> stuAccountList = new ArrayList<String>();
+        for(GuideTeacher stuAccount : guideTeacherList){
+            stuAccountList.add(stuAccount.getStudentAccount());
+        }
+        for (String student : stuAccountList){
+            topicUploadList.add(topicUploadService.findByTeacher(student).get(0));
+        }
         model.addAttribute("guideTeacherList", guideTeacherList);
         model.addAttribute("topicSelectList", topicSelectList);
+        model.addAttribute("topicUploadList",topicUploadList);
         return "stulist";
     }
 

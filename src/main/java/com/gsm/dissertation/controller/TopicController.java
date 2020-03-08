@@ -8,6 +8,7 @@ import com.gsm.dissertation.service.GuideTeacherService;
 import com.gsm.dissertation.service.NoticeService;
 import com.gsm.dissertation.service.TopicSelectService;
 import com.gsm.dissertation.service.TopicUploadService;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -196,5 +201,33 @@ public class TopicController {
         topicUploadService.save(topicUpload);
         model.addAttribute("ok", "保存成功");
         return "redirect:/topicupload";
+    }
+
+    @GetMapping("/topicDownload/{id}")
+    public void topicDownload(@PathVariable("id") Integer id, HttpSession session, HttpServletRequest request, HttpServletResponse response){
+        response.setCharacterEncoding(request.getCharacterEncoding());
+        response.setContentType("application/octet-stream");
+        FileInputStream fis = null;
+
+        TopicUpload topicUpload = topicUploadService.findById(id).get();
+        try {
+            File file = new File(topicUpload.getUploadPath());
+            fis = new FileInputStream(file);
+            response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
+            IOUtils.copy(fis,response.getOutputStream());
+            response.flushBuffer();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

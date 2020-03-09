@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
-    <title>登录</title>
+    <title>注册</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
@@ -18,30 +18,40 @@
                     <div class="col-lg-4">
                         <div class="login-content card">
                             <div class="login-form">
-                                <h4>登录</h4>
-                                <form th:action="@{/login}" th:object="${userLogin}" method="POST">
+                                <h4>注册</h4>
+                                <form th:action="@{/regist}" th:object="${user}" method="POST">
                                     <div class="form-group">
                                         <label>用户名</label>
                                         <input  class="form-control" th:field="*{account}" placeholder="请输入用户名">
                                     </div>
                                     <div class="form-group">
-                                        <label>密码</label>
-                                        <input type="password" class="form-control" th:field="*{password}" placeholder="请输入密码">
+                                        <label>姓名</label>
+                                        <input  class="form-control" th:field="*{name}" placeholder="请输入姓名">
                                     </div>
                                     <div class="form-group">
-                                        <label>登录类型</label>
-                                        <select class="form-control" th:field="*{type}">
-                                            <option th:each="type:${loginType}" th:value="${type.getPara_code()}" th:text="${type.getPara_value()}"></option>
+                                        <label>性别</label>
+                                        <select class="form-control" th:field="*{grander}">
+                                            <option th:value="${'男'}" th:text="${'男'}"></option>
+                                            <option th:value="${'女'}" th:text="${'女'}"></option>
                                         </select>
                                     </div>
-                                    <div>
-                                        <label class="pull-right">
-                                            <a href="#">忘记密码？</a>
-                                        </label>
+                                    <div class="form-group">
+                                        <label>专业</label>
+                                        <select class="form-control" th:field="*{major}" οnfοcus="this.defaultIndex=this.selectedIndex;" οnchange="this.selectedIndex=this.defaultIndex;">
+                                            <option th:each="para:${major}" th:value="${para.getPara_code()}" th:text="${para.getPara_value()}"></option>
+                                        </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">登录</button>
+                                    <div class="form-group">
+                                        <label>密码</label>
+                                        <input type="password" class="form-control" placeholder="请输入密码">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>重复密码</label>
+                                        <input type="password" class="form-control" th:field="*{password}" placeholder="请输入密码">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">注册</button>
                                     <div class="register-link m-t-15 text-center">
-                                        <p>没有账号 ？ <a th:href="@{regist}">现在注册</a></p>
+                                        <p>已有账号 <a th:href="@{login}">现在登录</a></p>
                                     </div>
                                 </form>
                                 <div class="row" th:unless="${#strings.isEmpty(ok)}">

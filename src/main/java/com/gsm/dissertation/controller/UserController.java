@@ -73,28 +73,27 @@ public class UserController {
         return "stulist";
     }
 
-    @GetMapping({"/edituser", "/edituser/{uid}"})
-    public String edit(@PathVariable(name = "uid", required = false) Integer uid,Model model){
-        Users user = new Users();
-        if(uid != null && uid > 0){
-            user = userService.findById(uid);
-        }
-        model.addAttribute("user", user);
-        return "edituser";
+    @GetMapping("/regist")
+    public String edit(Model model){
+        Users student = new Users();
+        List list_ParameterMajor = parameterService.getParameterByType("0004");
+        model.addAttribute("user",student);
+        model.addAttribute("major",list_ParameterMajor);
+        return "regist";
     }
 
-    @PostMapping("/saveuser")
+    @PostMapping("/regist")
     public String save(@Valid Users user, BindingResult result, RedirectAttributes attr){
         try {
             if (result.hasErrors()){
-                return "redirect:/edituser";
+                return "redirect:/regist";
             }
             userService.save(user);
-            attr.addFlashAttribute("ok","保存成功");
-            return "redirect:/listusers";
+            attr.addFlashAttribute("ok","注册成功，马上登陆试试呢~");
+            return "redirect:/login";
         }catch (Exception ex){
-            attr.addFlashAttribute("err","保存失败" + ex.toString());
-            return "redirect:/edituser";
+            attr.addFlashAttribute("error","保存失败" + ex.toString());
+            return "redirect:/regist";
         }
     }
 
@@ -181,10 +180,10 @@ public class UserController {
                 return "redirect:techmain";
             }
         }else{
-            attr.addFlashAttribute("fail","登录失败");
+            attr.addFlashAttribute("error","登录失败");
         }
         //TODO 管理员
-
+        attr.addFlashAttribute("error","登录失败，密码错误");
         return "redirect:/login";
     }
 

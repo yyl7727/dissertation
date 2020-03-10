@@ -91,7 +91,7 @@ public class TopicController {
             TopicRelease topicRelease = topicReleaseRepository.findById(Integer.parseInt(tid)).get();
             TopicSelect topicSelect = new TopicSelect();
             LocalDateTime dateTime = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             topicSelect.setStudentAccount(student.getAccount());
             topicSelect.setStudentName(student.getName());
             topicSelect.setStatus("0");
@@ -134,7 +134,7 @@ public class TopicController {
             notice.setSendSubject("选题成功");
             notice.setSendContent("教师通过你的论题申请！");
             LocalDateTime dateTime = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             notice.setSendTime(dateTime.format(formatter));
             notice.setStatus("0");
             noticeService.save(notice);
@@ -157,7 +157,7 @@ public class TopicController {
             notice.setSendSubject("选题失败");
             notice.setSendContent("教师拒绝了你的论题申请！");
             LocalDateTime dateTime = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             notice.setSendTime(dateTime.format(formatter));
             notice.setStatus("0");
             noticeService.save(notice);

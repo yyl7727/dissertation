@@ -162,28 +162,42 @@ public class UserController {
         Teacher teacher;
 
         if (userLogin.getType().equals(TYPESTUDENT)){
-            if(userService.checkUser(userLogin).equals("0")) {
+            String optionFlag = userService.checkUser(userLogin);
+            if("0".equals(optionFlag)) {
                 u = userService.findUsersByAccount(userLogin.getAccount());
                 LocalDateTime dateTime = LocalDateTime.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 u.setLasttime(dateTime.format(formatter));
                 userService.update(u);
                 session.setAttribute("user",u);
                 //跳转到学生登录首页
                 return "redirect:stumain";
+            }else if("1".equals(optionFlag)){
+                attr.addFlashAttribute("error","登录失败，密码错误");
+                return "redirect:/login";
+            }else{
+                attr.addFlashAttribute("error","登录失败，用户不存在");
+                return "redirect:/login";
             }
         }else if(userLogin.getType().equals(TYPETEACHER)){
-            if(teacherService.checkTeacher(userLogin).equals("0")){
+            String optionFlag = teacherService.checkTeacher(userLogin);
+            if("0".equals(optionFlag)){
                 teacher = teacherService.findTeacherByAccount(userLogin.getAccount());
                 session.setAttribute("user",teacher);
                 //跳转到教师主页
                 return "redirect:techmain";
+            }else if("1".equals(optionFlag)){
+                attr.addFlashAttribute("error","登录失败，密码错误");
+                return "redirect:/login";
+            }else{
+                attr.addFlashAttribute("error","登录失败，用户不存在");
+                return "redirect:/login";
             }
         }else{
             attr.addFlashAttribute("error","登录失败");
         }
         //TODO 管理员
-        attr.addFlashAttribute("error","登录失败，密码错误");
+
         return "redirect:/login";
     }
 

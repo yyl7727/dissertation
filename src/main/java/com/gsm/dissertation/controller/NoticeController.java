@@ -58,7 +58,7 @@ public class NoticeController {
             notice.setSendUserAccount(teacher.getAccount());
             notice.setSendUserName(teacher.getName());
             LocalDateTime dateTime = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             notice.setSendTime(dateTime.format(formatter));
             notice.setStatus("0");
             noticeService.save(notice);
@@ -93,7 +93,7 @@ public class NoticeController {
             notice.setSendUserAccount(student.getAccount());
             notice.setSendUserName(student.getName());
             LocalDateTime dateTime = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             notice.setSendTime(dateTime.format(formatter));
             notice.setStatus("0");
             noticeService.save(notice);

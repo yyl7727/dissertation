@@ -33,10 +33,10 @@ public class TeacherServiceImpl implements TeacherService {
             if(teacher.getPassword().equals(userLogin.getPassword())){
                 return "0";
             }else {
-                return "密码错误";
+                return "1";
             }
         }else{
-            return "用户不存在";
+            return "9";
         }
     }
 

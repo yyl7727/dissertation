@@ -241,6 +241,24 @@ public class UserController {
         }
     }
 
+    @GetMapping("/getteacherinfo/{account}")
+    public String getTeacherInfoByAccount(@PathVariable("account") String account,Model model, HttpSession session){
+        Teacher teacher;
+        List<Parameter> list_ParameterTitles;
+        List<Parameter> list_ParameterEducation;
+
+        teacher = teacherService.findTeacherByAccount(account);
+        list_ParameterTitles = parameterService.getParameterByType("0002");
+        list_ParameterEducation = parameterService.getParameterByType("0003");
+        if (!"".equals(teacher.getName())){
+            model.addAttribute("teacher",teacher);
+            model.addAttribute("titleList", list_ParameterTitles);
+            model.addAttribute("educationList",list_ParameterEducation);
+            return "teacherinfo";
+        }
+        return "redirect:/topicselect";
+    }
+
     @PostMapping("/teacherinfo")
     public String alterTeacherInfo(@Valid Teacher teacher, BindingResult result, RedirectAttributes attr){
         if (result.hasErrors()){

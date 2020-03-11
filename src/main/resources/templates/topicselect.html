@@ -29,7 +29,7 @@
                                     <tr th:each="topic: ${topicReleaseList}">
                                         <td th:text="${topic.getTopicName()}"></td>
                                         <td th:text="${topic.getTopicExplain()}"></td>
-                                        <td th:text="${topic.getTeacherName()}"></td>
+                                        <td><a th:text="${topic.getTeacherName()}" th:href="@{|/getteacherinfo/${topic.getTeacherAccount()}|}"></a></td>
                                         <td th:text="${topic.getT_status()}==0?'可选':'不可选'"></td>
                                         <td>
                                             <a class="btn btn-sm round btn-outline-success" th:href="@{|/selecttopic/${topic.getTid()}|}">确定选题</a>

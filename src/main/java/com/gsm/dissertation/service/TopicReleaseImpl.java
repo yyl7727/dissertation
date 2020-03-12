@@ -16,4 +16,14 @@ public class TopicReleaseImpl implements TopicReleaseService {
     public List<TopicRelease> findByMajor(String major) {
         return topicReleaseRepository.findTopicReleaseByMajor(major);
     }
+
+    @Override
+    public String save(TopicRelease topicRelease) {
+        try {
+            topicReleaseRepository.save(topicRelease);
+            return "0";
+        }catch (Exception ex){
+            return "保存失败,错误信息："+ex.getMessage();
+        }
+    }
 }

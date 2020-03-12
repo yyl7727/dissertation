@@ -254,6 +254,7 @@ public class UserController {
             model.addAttribute("teacher",teacher);
             model.addAttribute("titleList", list_ParameterTitles);
             model.addAttribute("educationList",list_ParameterEducation);
+            model.addAttribute("moveFlag","limit");
             return "teacherinfo";
         }
         return "redirect:/topicselect";

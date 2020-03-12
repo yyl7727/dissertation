@@ -4,10 +4,7 @@ package com.gsm.dissertation.controller;
 import com.gsm.dissertation.dao.ParameterRepository;
 import com.gsm.dissertation.dao.TopicReleaseRepository;
 import com.gsm.dissertation.model.*;
-import com.gsm.dissertation.service.GuideTeacherService;
-import com.gsm.dissertation.service.NoticeService;
-import com.gsm.dissertation.service.TopicSelectService;
-import com.gsm.dissertation.service.TopicUploadService;
+import com.gsm.dissertation.service.*;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +32,8 @@ public class TopicController {
     @Autowired
     TopicReleaseRepository topicReleaseRepository;
     @Autowired
+    TopicReleaseService topicReleaseService;
+    @Autowired
     ParameterRepository parameterRepository;
     @Autowired
     TopicSelectService TopicSelectService;
@@ -55,22 +54,22 @@ public class TopicController {
 
     @PostMapping("/topicrelease")
     public String stuList(TopicRelease topicRelease, HttpSession session, RedirectAttributes attr){
-        try{
-            //课题名称不为空时
-            if (!"".equals(topicRelease.getTopicName())){
-                topicRelease.setT_status("0");
-                Teacher teacher = (Teacher) session.getAttribute("user");
-                topicRelease.setTeacherAccount(teacher.getAccount());
-                topicRelease.setTeacherName(teacher.getName());
-                topicReleaseRepository.save(topicRelease);
+        //课题名称不为空时
+        if (!"".equals(topicRelease.getTopicName())){
+            topicRelease.setT_status("0");
+            Teacher teacher = (Teacher) session.getAttribute("user");
+            topicRelease.setTeacherAccount(teacher.getAccount());
+            topicRelease.setTeacherName(teacher.getName());
+            String addResult = topicReleaseService.save(topicRelease);
+            if("0".equals(addResult)){
                 attr.addFlashAttribute("ok","课题发布成功");
                 return "redirect:/topicrelease";
-            }else{
-                attr.addFlashAttribute("error","课题发布失败，课题名称不能为空");
+            }else {
+                attr.addFlashAttribute("error","课题发布失败："+addResult);
                 return "redirect:/topicrelease";
             }
-        }catch (Exception ex){
-            attr.addFlashAttribute("error","课题发布失败："+ex.getMessage());
+        }else{
+            attr.addFlashAttribute("error","课题发布失败，课题名称不能为空");
             return "redirect:/topicrelease";
         }
     }
@@ -229,5 +228,10 @@ public class TopicController {
                 }
             }
         }
+    }
+
+    @GetMapping("topicmanage")
+    public String topicManage(){
+        return "topicmanage";
     }
 }

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
     <title>个人信息</title>
-    <!-- Custom CSS -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
@@ -49,7 +48,7 @@
                             <input type="text" id="achievements" class="form-control" th:field="*{achievements}">
                         </div>
                     </div>
-                    <div class="form-actions">
+                    <div class="form-actions" th:if="${#strings.isEmpty(moveFlag)}">
                         <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
                     </div>
                 </form>

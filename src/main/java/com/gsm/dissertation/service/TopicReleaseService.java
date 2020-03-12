@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TopicReleaseService {
     List<TopicRelease> findByMajor(String major);
+
+    String save(TopicRelease topicRelease);
 }

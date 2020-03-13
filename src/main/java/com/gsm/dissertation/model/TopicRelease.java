@@ -45,6 +45,11 @@ public class TopicRelease {
     private String topicMajor;
 
     /**
+     * 已选择此课题的人数
+     */
+    private int studentCount;
+
+    /**
      * 发布状态
      * 0有效  1失效
      */
@@ -97,6 +102,14 @@ public class TopicRelease {
 
     public void setTopicMajor(String topicMajor) {
         this.topicMajor = topicMajor;
+    }
+
+    public int getStudentCount() {
+        return studentCount;
+    }
+
+    public void setStudentCount(int studentCount) {
+        this.studentCount = studentCount;
     }
 
     public String getT_status() {

@@ -9,4 +9,6 @@ public interface TopicReleaseService {
     List<TopicRelease> findByMajor(String major);
 
     String save(TopicRelease topicRelease);
+
+    String updateCountById(Integer id);
 }

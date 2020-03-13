@@ -60,6 +60,7 @@ public class TopicController {
             Teacher teacher = (Teacher) session.getAttribute("user");
             topicRelease.setTeacherAccount(teacher.getAccount());
             topicRelease.setTeacherName(teacher.getName());
+            topicRelease.setStudentCount(0);
             String addResult = topicReleaseService.save(topicRelease);
             if("0".equals(addResult)){
                 attr.addFlashAttribute("ok","课题发布成功");
@@ -124,6 +125,10 @@ public class TopicController {
             guideTeacher.setTopicName(topicSelect.getTopicName());
             guideTeacher.setStatus(0);
             guideTeacherService.save(guideTeacher);
+
+            //审批通过，课题的已选择人数+1
+            String result = topicReleaseService.updateCountById(Integer.parseInt(topicSelect.getTopicId()));
+
             //向学生发送通知
             Notice notice = new Notice();
             notice.setGetUserAccount(topicSelect.getStudentAccount());

@@ -62,7 +62,11 @@ public class UserController {
         ArrayList<TopicUpload> topicUploadList = new ArrayList<TopicUpload>();
         ArrayList<String> stuAccountList = new ArrayList<String>();
         for(GuideTeacher stuAccount : guideTeacherList){
-            stuAccountList.add(stuAccount.getStudentAccount());
+            int tmpCount = topicUploadService.getUploadCountByStudentAccount(stuAccount.getStudentAccount());
+            if (tmpCount > 0){
+                //如果学生没有提交过论文则不添加到显示列表中
+                stuAccountList.add(stuAccount.getStudentAccount());
+            }
         }
         for (String student : stuAccountList){
             topicUploadList.add(topicUploadService.findByTeacher(student).get(0));

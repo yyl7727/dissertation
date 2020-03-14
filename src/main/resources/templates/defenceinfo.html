@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
+    <title>个人信息</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+<div class="col-lg-4 col-lg-offset-4  col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2 container col-center-block">
+    <div class="card card-outline-primary">
+        <div class="card-header">
+            <h4 class="m-b-0 text-white">答辩信息</h4>
+        </div>
+        <div>
+            <form th:action="@{/updatedefence}" method="post" th:object="${defence}" style="align-content: center">
+                <div>
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{topicId}">
+                    <input type="hidden" th:field="*{studentAccount}">
+                    <input type="hidden" th:field="*{teacherAccount}">
+                    <hr>
+                    <div class="form-group">
+                        <label class="control-label">学生姓名</label>
+                        <input readonly="readonly" type="text" class="form-control" th:field="*{studentName}"  placeholder="请输入姓名">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">论题名称</label>
+                        <input readonly="readonly" type="text" class="form-control" th:field="*{topicName}"} placeholder="请输入性别">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">指导教师</label>
+                        <input readonly="readonly" type="text" class="form-control" th:field="*{teacherName}"} placeholder="请输入性别">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">答辩日期</label>
+                        <input type="text" readonly="readonly" class="form-control" th:field="*{defenceDate}">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">答辩成绩</label>
+                        <input type="text" class="form-control" th:field="*{result}">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" th:unless="${#strings.isEmpty(success)}">
+        <p class="alert alert-success" th:text="${success}"></p>
+    </div>
+    <div class="row" th:unless="${#strings.isEmpty(fail)}">
+        <p class="alert alert-danger" th:text="${fail}"></p>
+    </div>
+</div>
+<script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.slimscroll.js}"></script>
+<script th:src="@{/js/sidebarmenu.js}"></script>
+<script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+<script th:src="@{/js/custom.min.js}"></script>
+</body>
+</html>

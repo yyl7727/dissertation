@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -43,6 +44,8 @@ public class TopicController {
     NoticeService noticeService;
     @Autowired
     TopicUploadService topicUploadService;
+    @Autowired
+    DefenceService defenceService;
 
     @GetMapping("/topicrelease")
     public String stuList(Model model){
@@ -255,5 +258,65 @@ public class TopicController {
             model.addAttribute("err",resultFlag);
             return "redirect:/topicmanage";
         }
+    }
+
+    @GetMapping("defenceManage")
+    public String defenceManage(Model model, HttpSession session){
+        Teacher teacher = (Teacher)session.getAttribute("user");
+        List<Defence> defenceList = defenceService.findAllByTeacherAccount(teacher.getAccount());
+        if (defenceList.size()>0){
+            model.addAttribute("defenceList",defenceList);
+        }else {
+            model.addAttribute("defenceList",new ArrayList<Defence>());
+        }
+        return "defencemanage";
+    }
+
+    @GetMapping("/saveDefence/{account}")
+    public String saveDefence(@PathVariable("account") String account, Model model, RedirectAttributes attr){
+        int uploadCount = topicUploadService.getUploadCountByStudentAccount(account);
+        if (uploadCount == 0){
+            attr.addFlashAttribute("message","该学生尚未提交过论文，不能参加答辩！");
+            return "redirect:/stulist";
+        }
+        GuideTeacher guideTeacher = guideTeacherService.getGuideTeacherByStudentAccount(account).get(0);
+        Defence defence = new Defence();
+        defence.setResult("0");
+        defence.setStudentAccount(guideTeacher.getStudentAccount());
+        defence.setStudentName(guideTeacher.getStudentName());
+        defence.setTeacherAccount(guideTeacher.getTeacherAccount());
+        defence.setTeacherName(guideTeacher.getTeacherName());
+        defence.setTopicId(guideTeacher.getTopicId());
+        defence.setTopicName(guideTeacher.getTopicName());
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        defence.setDefenceDate(dateTime.format(formatter));
+        String saveFlag = defenceService.save(defence);
+        if ("0".equals(saveFlag)){
+            Notice notice = new Notice();
+            notice.setGetUserAccount(guideTeacher.getStudentAccount());
+            notice.setGetUserName(guideTeacher.getStudentName());
+            notice.setSendUserAccount(guideTeacher.getTeacherAccount());
+            notice.setSendUserName(guideTeacher.getTeacherName());
+            notice.setSendSubject("请准备答辩");
+            notice.setSendContent("教师在对你提交论文审核后，同意你于"+defence.getDefenceDate()+"参加答辩，请尽快联系指导教师做好答辩相关事宜。");
+            dateTime = LocalDateTime.now();
+            formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            notice.setSendTime(dateTime.format(formatter));
+            notice.setStatus("0");
+            noticeService.save(notice);
+            attr.addFlashAttribute("message","已通知该学生参加答辩");
+            return "redirect:/stulist";
+        }else {
+            attr.addFlashAttribute("message",saveFlag);
+            return "redirect:/stulist";
+        }
+    }
+
+    @GetMapping("/defenceinfo/{id}")
+    public String updatedefence(@PathVariable("id") Integer id,Model model){
+        Defence defence = defenceService.getDefenceById(id);
+        model.addAttribute("defence",defence);
+        return "defenceinfo";
     }
 }

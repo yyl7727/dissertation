@@ -7,6 +7,9 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
+    <div class="row" th:unless="${#strings.isEmpty(message)}">
+        <p class="alert" th:text="${message}"></p>
+    </div>
     <div class="row">
         <div class="col-lg-4">
             <div class="card">
@@ -22,6 +25,7 @@
                                         <th>学号</th>
                                         <th>姓名</th>
                                         <th>论题</th>
+                                        <th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -30,6 +34,7 @@
                                         <td class="text-success" th:text="${guideTeacher.getStudentAccount()}"></td>
                                         <td class="text-success" th:text="${guideTeacher.getStudentName()}"></td>
                                         <td class="text-success" th:text="${guideTeacher.getTopicName()}"></td>
+                                        <td><a class="btn btn-sm round btn-outline-success" th:href="@{|/saveDefence/${guideTeacher.studentAccount}|}">参加答辩</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -77,7 +82,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-xl-6">
+        <div class="col-12 col-xl-12">
             <div class="card">
                 <div class="card-title">
                     <h4>学生论文状态</h4>
@@ -108,60 +113,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-xl-6">
-            <div class="card">
-                <div class="card-title">
-                    <h4>Buy Order</h4>
-                </div>
-                <div class="card-body">
-                    <div class="trade-history-table">
-                        <div class="table-responsive">
-                            <table class="table table-de mb-0">
-                                <thead>
-                                <tr>
-                                    <th>Price per BTC</th>
-                                    <th>BTC Ammount</th>
-                                    <th>Total($)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>10599.5</td>
-                                    <td><i class="cc BTC"></i> 0.02000000</td>
-                                    <td>$ 211.99</td>
-                                </tr>
-                                <tr>
-                                    <td>10583.5</td>
-                                    <td><i class="cc BTC"></i> 0.04000000</td>
-                                    <td>$ 423.34</td>
-                                </tr>
-                                <tr>
-                                    <td>10583.8</td>
-                                    <td><i class="cc BTC"></i> 0.35000000</td>
-                                    <td>$ 3704.33</td>
-                                </tr>
-                                <tr>
-                                    <td>10595.7</td>
-                                    <td><i class="cc BTC"></i> 0.30000000</td>
-                                    <td>$ 3178.71</td>
-                                </tr>
-                                <tr>
-                                    <td>10583.7</td>
-                                    <td><i class="cc BTC"></i> 0.25100000</td>
-                                    <td>$ 2656.51</td>
-                                </tr>
-                                <tr>
-                                    <td>10595.8</td>
-                                    <td><i class="cc BTC"></i> 0.29697926</td>
-                                    <td>$ 3146.74</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
     <script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
     <script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>

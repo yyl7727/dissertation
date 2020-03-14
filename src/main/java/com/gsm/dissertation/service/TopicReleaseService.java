@@ -11,4 +11,8 @@ public interface TopicReleaseService {
     String save(TopicRelease topicRelease);
 
     String updateCountById(Integer id);
+
+    List<TopicRelease> findAllByTeacherAccount(String teachAccount);
+
+    String updateTopicStatus(Integer id);
 }

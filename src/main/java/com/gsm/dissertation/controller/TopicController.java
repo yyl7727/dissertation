@@ -236,7 +236,24 @@ public class TopicController {
     }
 
     @GetMapping("topicmanage")
-    public String topicManage(){
+    public String topicManage(Model model,HttpSession session){
+        Teacher teacher = (Teacher) session.getAttribute("user");
+        //通过教师账号获取教师发布的所有课题
+        List<TopicRelease> topicReleaseList = topicReleaseService.findAllByTeacherAccount(teacher.getAccount());
+        if (topicReleaseList != null && topicReleaseList.size() > 0){
+            model.addAttribute("topicReleaseList",topicReleaseList);
+        }
         return "topicmanage";
+    }
+
+    @GetMapping("/topicClose/{id}")
+    public String topicClose(@PathVariable("id") Integer id, Model model){
+        String resultFlag = topicReleaseService.updateTopicStatus(id);
+        if ("0".equals(resultFlag)){
+            return "redirect:/topicmanage";
+        }else {
+            model.addAttribute("err",resultFlag);
+            return "redirect:/topicmanage";
+        }
     }
 }

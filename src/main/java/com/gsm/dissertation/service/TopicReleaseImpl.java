@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,6 +42,33 @@ public class TopicReleaseImpl implements TopicReleaseService {
             return "0";
         }catch (Exception ex){
             return "更新失败,错误信息:"+ex.getMessage();
+        }
+    }
+
+    @Override
+    public List<TopicRelease> findAllByTeacherAccount(String teachAccount) {
+        List<TopicRelease> topicReleaseList = null;
+        try {
+            topicReleaseList = topicReleaseRepository.findAllByTeacherAccount(teachAccount);
+            return topicReleaseRepository.findAllByTeacherAccount(teachAccount);
+        }catch (Exception ex){
+            return topicReleaseList;
+        }
+    }
+
+    /**
+     * 关闭课题
+     * @param id 课题id
+     * @return 关闭结果
+     */
+    @Transactional
+    @Override
+    public String updateTopicStatus(Integer id) {
+        try {
+            topicReleaseRepository.updateTopicStatus(id);
+            return "0";
+        }catch (Exception ex){
+            return "课题关闭失败,错误信息:" + ex.getMessage();
         }
     }
 }

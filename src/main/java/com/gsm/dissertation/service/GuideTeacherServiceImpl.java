@@ -33,4 +33,10 @@ public class GuideTeacherServiceImpl implements GuideTeacherService {
         List<GuideTeacher> list_GuideTeacher = guideTeacherRepository.getGuideTeacherByStudentAccount(account);
         return list_GuideTeacher;
     }
+
+    @Override
+    public List<GuideTeacher> findAll() {
+        List<GuideTeacher> list_GuideTeacher = guideTeacherRepository.findAll();
+        return list_GuideTeacher;
+    }
 }

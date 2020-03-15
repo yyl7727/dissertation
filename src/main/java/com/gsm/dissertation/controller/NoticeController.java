@@ -1,9 +1,6 @@
 package com.gsm.dissertation.controller;
 
-import com.gsm.dissertation.model.GuideTeacher;
-import com.gsm.dissertation.model.Notice;
-import com.gsm.dissertation.model.Teacher;
-import com.gsm.dissertation.model.Users;
+import com.gsm.dissertation.model.*;
 import com.gsm.dissertation.service.GuideTeacherService;
 import com.gsm.dissertation.service.NoticeService;
 import com.gsm.dissertation.service.TeacherService;
@@ -118,6 +115,14 @@ public class NoticeController {
         return "noticecenterteacher";
     }
 
+    @GetMapping("/noticecenterintendant")
+    public String noticeCenterIntendant(Model model, HttpSession session){
+        Intendant intendant = (Intendant)session.getAttribute("user");
+        List<Notice> noticeList = noticeService.findAllByGetUserAccount(intendant.getAccount());
+        model.addAttribute("noticeList",noticeList);
+        return "noticecenterintendant";
+    }
+
     @GetMapping({"/noticereadteacher","/noticereadteacher/{id}"})
     public String noticeReadTeacher(@PathVariable("id") Integer id, Model model, HttpSession session){
         if (id != null){
@@ -136,5 +141,15 @@ public class NoticeController {
             model.addAttribute("notice",notice);
         }
         return "noticereadstudent";
+    }
+
+    @GetMapping({"/noticereadintendant","/noticereadintendant/{id}"})
+    public String noticeReadIntendant(@PathVariable("id") Integer id, Model model, HttpSession session){
+        if (id != null){
+            noticeService.updateById(id);
+            Notice notice = noticeService.findById(id);
+            model.addAttribute("notice",notice);
+        }
+        return "noticereadintendant";
     }
 }

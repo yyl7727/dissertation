@@ -15,4 +15,6 @@ public interface TopicReleaseService {
     List<TopicRelease> findAllByTeacherAccount(String teachAccount);
 
     String updateTopicStatus(Integer id);
+
+    List<TopicRelease> findAll();
 }

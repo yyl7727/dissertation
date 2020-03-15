@@ -71,4 +71,9 @@ public class TopicReleaseImpl implements TopicReleaseService {
             return "课题关闭失败,错误信息:" + ex.getMessage();
         }
     }
+
+    @Override
+    public List<TopicRelease> findAll() {
+        return topicReleaseRepository.findAll();
+    }
 }

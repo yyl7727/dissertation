@@ -17,4 +17,6 @@ public interface TopicSelectService {
     void updateStatusById1(Integer id);
 
     TopicSelect findById(Integer id);
+
+    List<TopicSelect> findAll();
 }

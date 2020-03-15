@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">课题管理</h4>
+                    <h6 class="card-subtitle">在此页面查看您发布的所有课题并选择是否关闭课题</h6>
+                    <div class="table-responsive m-t-40">
+                        <table id="myTable" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>课题名称</th>
+                                <th>课题简介</th>
+                                <th>发布教师</th>
+                                <th>选题人数</th>
+                                <th>课题状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="topicRelease: ${topicReleaseList}">
+                                <td th:text="${topicRelease.topicName}"></td>
+                                <td th:text="${topicRelease.topicExplain}"></td>
+                                <td th:text="${topicRelease.teacherName}"></td>
+                                <td th:text="${topicRelease.studentCount}"></td>
+                                <td th:text="${topicRelease.t_status}==0?'可选':'不可选'"></td>
+                                <td><a class="btn btn-sm round btn-outline-danger" onClick="return confirm('确定关闭此课题？');" th:href="@{|/topicClose1/${topicRelease.tid}|}">关闭课题</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.slimscroll.js}"></script>
+<script th:src="@{/js/sidebarmenu.js}"></script>
+<script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+<script th:src="@{/js/custom.min.js}"></script>
+
+<script th:src="@{/js/lib/datatables/datatables.min.js}"></script>
+<script th:src="@{/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js}"></script>
+<script th:src="@{/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js}"></script>
+<script th:src="@{/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js}"></script>
+<script th:src="@{/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js}"></script>
+<script th:src="@{/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js}"></script>
+<script th:src="@{/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js}"></script>
+<script th:src="@{/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js}"></script>
+<script th:src="@{/js/lib/datatables/datatables-init.js}"></script>
+</body>
+</html>

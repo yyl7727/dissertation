@@ -24,4 +24,7 @@ public interface TopicSelectRepository extends JpaRepository<TopicSelect, Intege
     void updateStatusById1(Integer id);
 
     Optional<TopicSelect> findById(Integer id);
+
+    @Query("select t from TopicSelect t where t.status='0'")
+    List<TopicSelect> findAll();
 }

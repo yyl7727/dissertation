@@ -44,4 +44,9 @@ public class TopicSelectImpl implements TopicSelectService {
     public TopicSelect findById(Integer id) {
         return topicSelectRepository.findById(id).get();
     }
+
+    @Override
+    public List<TopicSelect> findAll() {
+        return topicSelectRepository.findAll();
+    }
 }

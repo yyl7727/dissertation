@@ -18,4 +18,7 @@ public interface GuideTeacherRepository extends JpaRepository<GuideTeacher,Integ
 
     @Query("select g from GuideTeacher g where g.studentAccount=?1")
     List<GuideTeacher> getGuideTeacherByStudentAccount(String account);
+
+    @Query("select g from GuideTeacher g")
+    List<GuideTeacher> findAll();
 }

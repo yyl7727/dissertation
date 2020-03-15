@@ -9,6 +9,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -249,6 +251,16 @@ public class TopicController {
         return "topicmanage";
     }
 
+    @GetMapping("topicmanage1")
+    public String topicManage1(Model model){
+        //获取所有教师发布的所有课题
+        List<TopicRelease> topicReleaseList = topicReleaseService.findAll();
+        if (topicReleaseList != null && topicReleaseList.size() > 0){
+            model.addAttribute("topicReleaseList",topicReleaseList);
+        }
+        return "topicmanage1";
+    }
+
     @GetMapping("/topicClose/{id}")
     public String topicClose(@PathVariable("id") Integer id, Model model){
         String resultFlag = topicReleaseService.updateTopicStatus(id);
@@ -257,6 +269,17 @@ public class TopicController {
         }else {
             model.addAttribute("err",resultFlag);
             return "redirect:/topicmanage";
+        }
+    }
+
+    @GetMapping("/topicClose1/{id}")
+    public String topicClose1(@PathVariable("id") Integer id, Model model){
+        String resultFlag = topicReleaseService.updateTopicStatus(id);
+        if ("0".equals(resultFlag)){
+            return "redirect:/topicmanage1";
+        }else {
+            model.addAttribute("err",resultFlag);
+            return "redirect:/topicmanage1";
         }
     }
 
@@ -270,6 +293,17 @@ public class TopicController {
             model.addAttribute("defenceList",new ArrayList<Defence>());
         }
         return "defencemanage";
+    }
+
+    @GetMapping("defenceManage1")
+    public String defenceManage1(Model model, HttpSession session){
+        List<Defence> defenceList = defenceService.findAll();
+        if (defenceList.size()>0){
+            model.addAttribute("defenceList",defenceList);
+        }else {
+            model.addAttribute("defenceList",new ArrayList<Defence>());
+        }
+        return "defencemanage1";
     }
 
     @GetMapping("/saveDefence/{account}")
@@ -318,5 +352,57 @@ public class TopicController {
         Defence defence = defenceService.getDefenceById(id);
         model.addAttribute("defence",defence);
         return "defenceinfo";
+    }
+
+    @PostMapping("/updatedefence")
+    public String updatedefence(@Valid Defence defence, BindingResult result,Model model, RedirectAttributes attr){
+        if (result.hasErrors()){
+            model.addAttribute("defence",defence);
+            return "defenceinfo";
+        }
+
+        String noticeSubject;
+        String noticeContent;
+        int resultTemp = 0;
+        if (!"".equals(defence.getResult())){
+            resultTemp = Integer.parseInt(defence.getResult());
+        }
+        if (resultTemp < 0 || resultTemp > 100){
+            model.addAttribute("fail","成绩输入不合理，请检查后重新输入。");
+            return "redirect:/defenceinfo/{"+ defence.getId() +"}";
+        }else {
+            if (resultTemp < 60){
+                noticeSubject = "很遗憾，答辩未通过";
+                noticeContent = "你的答辩结果，经过指导教师认定后，得分"+resultTemp+"，并未通过。";
+            }else if(resultTemp < 80){
+                noticeSubject = "恭喜你，答辩通过";
+                noticeContent = "你的答辩结果，经过指导教师认定后，得分"+resultTemp+"，成绩良好。";
+            }else{
+                noticeSubject = "恭喜你，答辩通过";
+                noticeContent = "你的答辩结果，经过指导教师认定后，得分"+resultTemp+"，成绩优秀。";
+            }
+        }
+        String saveResult = defenceService.updateResult(defence.getStudentAccount(),String.valueOf(resultTemp));
+        if ("0".equals(saveResult)){
+            model.addAttribute("success","学生成绩修改成功");
+            Notice notice = new Notice();
+            notice.setGetUserAccount(defence.getStudentAccount());
+            notice.setGetUserName(defence.getStudentName());
+            notice.setSendUserAccount(defence.getTeacherAccount());
+            notice.setSendUserName(defence.getTeacherName());
+            notice.setSendSubject(noticeSubject);
+            notice.setSendContent(noticeContent);
+            LocalDateTime dateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            notice.setSendTime(dateTime.format(formatter));
+            notice.setStatus("0");
+            noticeService.save(notice);
+            model.addAttribute("defence",defence);
+            return "defenceinfo";
+        }else {
+            model.addAttribute("fail","学生成绩修改失败:"+saveResult);
+            model.addAttribute("defence",defence);
+            return "defenceinfo";
+        }
     }
 }

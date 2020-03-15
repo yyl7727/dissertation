@@ -12,4 +12,6 @@ public interface DefenceService {
     String save(Defence defence);
 
     Defence getDefenceById(Integer id);
+
+    List<Defence> findAll();
 }

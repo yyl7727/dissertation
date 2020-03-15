@@ -17,4 +17,7 @@ public interface DefenceRepository extends JpaRepository<Defence,Integer> {
     void updateResult(String account, String result);
 
     Optional<Defence> getById(Integer id);
+
+    @Query("select t from Defence t")
+    List<Defence> findAll();
 }

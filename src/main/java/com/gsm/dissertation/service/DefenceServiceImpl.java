@@ -53,4 +53,9 @@ public class DefenceServiceImpl implements DefenceService {
             return defence = new Defence();
         }
     }
+
+    @Override
+    public List<Defence> findAll() {
+        return defenceRepository.findAll();
+    }
 }

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
+    <title>论文管理系统-管理员主页</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <style>
+        #myframe{
+            min-height: 1000px;
+            border: 0;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = index;
+        function index(){
+            if(self!=top){top.location=self.location;}
+        }
+    </script>
+</head>
+
+<body class="header-fix fix-sidebar">
+<div id="main-wrapper">
+    <div class="header">
+        <nav class="navbar top-navbar navbar-expand-md navbar-light">
+            <div class="navbar-header">
+                <a class="navbar-brand" th:href="@{intendantmain}">
+                    <b><img src="images/logo.png" alt="homepage" class="dark-logo" /></b>
+                    <span><img src="images/logo-text.png" alt="homepage" class="dark-logo" /></span>
+                </a>
+            </div>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav mr-auto mt-md-0">
+                    <li class="nav-item"> <a class="nav-link toggle-nav hidden-md-up text-muted  " href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                    <li class="nav-item m-l-10"> <a class="nav-link sidebartoggle hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                    <li class="nav-item dropdown mega-menu"></li>
+                </ul>
+                <ul class="navbar-nav my-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-muted  " href="#" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-envelope"></i>
+                            <div class="notify"> <span th:if="${noticeList.size()>0}" class="heartbit"></span> <span th:if="${noticeList.size()>0}" class="point"></span> </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right mailbox animated slideInRight" aria-labelledby="2">
+                            <ul>
+                                <li>
+                                    <div class="drop-title" style="color: black">你有 <span th:text="${noticeList.size()}"></span> 个新消息</div>
+                                </li>
+                                <li>
+                                    <div class="header-notify">
+
+                                        <a th:each="notice: ${noticeList}" th:href="@{|/noticereadteacher/${notice.getId()}|}" target="myframe">
+                                            <div class="notification-contnet">
+                                                <h5 th:text="${notice.getSendSubject()}"></h5> <span class="mail-desc" th:text="${notice.getSendContent()}"></span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="nav-label text-center" th:href="@{noticecenterteacher}" target="myframe"> 查看所有消息 <i class="fa fa-angle-right"></i> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right animated slideInRight">
+                            <ul class="dropdown-user">
+                                <li role="separator" class="divider"></li>
+                                <li><a th:href="@{intendantinfo}" target="myframe">个人信息</a></li>
+                                <!--                                    <li role="separator" class="divider"></li>-->
+                                <!--                                    <li><a href="#"> Setting</a></li>-->
+                                <li role="separator" class="divider"></li>
+                                <li><a th:href="@{login}">退出登录</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="left-sidebar">
+        <div class="scroll-sidebar">
+            <nav class="sidebar-nav">
+                <ul id="sidebar-menu">
+                    <li class="nav-devider"></li>
+                    <li class="nav-label">Home</li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-book"></i><span class="hide-menu">Sample Pages <span class="label label-rouded label-success pull-right">8</span></span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a th:href="@{topicmanage1}" target="myframe">课题管理</a></li>
+                            <li><a th:href="@{defenceManage1}" target="myframe">答辩管理</a></li>
+                            <li><a href="index4.html">Dashboard 5 </a></li>
+                            <li><a href="index5.html">Dashboard 6 </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-label">Layout</li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-columns"></i><span class="hide-menu">Layout</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="layout-blank.html">Blank</a></li>
+                            <li><a href="layout-boxed.html">Boxed</a></li>
+                            <li><a href="layout-fix-header.html">Fix Header</a></li>
+                            <li><a href="layout-fix-sidebar.html">Fix Sidebar</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-label">Apps &amp; Charts</li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-envelope"></i><span class="hide-menu">消息管理</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a th:href="@{noticesendtostudent}" target="myframe">发送邮件</a></li>
+                            <li><a th:href="@{noticecenterteacher}" target="myframe">消息中心</a></li>
+                        </ul>
+                    </li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-bar-chart"></i><span class="hide-menu">Charts</span></a>
+                        <ul aria-expanded="false" class="collapse">
+
+                            <li><a href="chart-morris.html">Morris</a></li>
+                            <li><a href="chart-chartjs.html">ChartJs</a></li>
+                            <li><a href="chart-chartist.html">Chartist </a></li>
+                            <li><a href="chart-amchart.html">AmChart</a></li>
+                            <li><a href="chart-echart.html">EChart</a></li>
+                            <li><a href="chart-sparkline.html">Sparkline</a></li>
+                            <li><a href="chart-peity.html">Peity</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-label">Features</li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-suitcase"></i><span class="hide-menu">Ui Elements <span class="label label-rouded label-danger pull-right">12</span></span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="ui-alert.html">Alert</a></li>
+                            <li><a href="ui-button.html">Button</a></li>
+                            <li><a href="ui-dropdown.html">Dropdown</a></li>
+                            <li><a href="ui-progressbar.html">Progressbar</a></li>
+                            <li><a href="ui-tab.html">Tab</a></li>
+                            <li><a href="ui-typography.html">Typography</a></li>
+                            <li><a href="uc-calender.html">Calender</a></li>
+                            <li><a href="uc-datamap.html">Datamap</a></li>
+                            <li><a href="uc-nestedable.html">Nestedable</a></li>
+                            <li><a href="uc-sweetalert.html">Sweetalert</a></li>
+                            <li><a href="uc-toastr.html">Toastr</a></li>
+                            <li><a href="uc-weather.html">Weather</a></li>
+                        </ul>
+                    </li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-wpforms"></i><span class="hide-menu">Forms</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="form-basic.html">Basic Forms</a></li>
+                            <li><a href="form-layout.html">Form Layout</a></li>
+                            <li><a href="form-validation.html">Form Validation</a></li>
+                            <li><a href="form-editor.html">Editor</a></li>
+                            <li><a href="form-dropzone.html">Dropzone</a></li>
+                        </ul>
+                    </li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-table"></i><span class="hide-menu">Tables</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="table-bootstrap.html">Basic Tables</a></li>
+                            <li><a href="table-datatable.html">Data Tables</a></li>
+                        </ul>
+                    </li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="ti-wallet m-r-5"></i><span class="hide-menu">Widgets</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="widget.html">Widgets</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-label">EXTRA</li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-book"></i><span class="hide-menu">Sample Pages <span class="label label-rouded label-success pull-right">8</span></span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="#" class="has-arrow">Authentication <span class="label label-rounded label-success">3</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="page-login.html">Login</a></li>
+                                    <li><a href="page-register.html">Register</a></li>
+                                    <li><a href="page-invoice.html">Invoice</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#" class="has-arrow">Error Pages</a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="page-error-400.html">400</a></li>
+                                    <li><a href="page-error-403.html">403</a></li>
+                                    <li><a href="page-error-404.html">404</a></li>
+                                    <li><a href="page-error-500.html">500</a></li>
+                                    <li><a href="page-error-503.html">503</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-map-marker"></i><span class="hide-menu">Maps</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="map-vector.html">Vector Map</a></li>
+                        </ul>
+                    </li>
+                    <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-level-down"></i><span class="hide-menu">Multi level dd</span></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="#">item 1.1</a></li>
+                            <li><a href="#">item 1.2</a></li>
+                            <li> <a class="has-arrow" href="#" aria-expanded="false">Menu 1.3</a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li><a href="#">item 1.3.1</a></li>
+                                    <li><a href="#">item 1.3.2</a></li>
+                                    <li><a href="#">item 1.3.3</a></li>
+                                    <li><a href="#">item 1.3.4</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">item 1.4</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="page-wrapper">
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h3 class="text-primary">管理员主页</h3> </div>
+        </div>
+        <div class="container-fluid">
+            <iframe id="myframe" name="myframe" class="container-fluid" th:src="@{/stulist1}">
+            </iframe>
+        </div>
+        <footer class="footer"> All Rights Reserved © Kunming University of Science and Technology Oxbridge College.</footer>
+    </div>
+</div>
+<script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.slimscroll.js}"></script>
+<script th:src="@{/js/sidebarmenu.js}"></script>
+<script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+<script th:src="@{/js/lib/webticker/jquery.webticker.min.js}"></script>
+<script th:src="@{/js/lib/peitychart/jquery.peity.min.js}"></script>
+<script th:src="@{/js/custom.min.js}"></script>
+<script th:src="@{/js/dashboard-1.js}"></script>
+</body>
+</html>

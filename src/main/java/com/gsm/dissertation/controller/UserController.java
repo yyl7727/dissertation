@@ -38,6 +38,8 @@ public class UserController {
     private NoticeService noticeService;
     @Autowired
     private TopicUploadService topicUploadService;
+    @Autowired
+    private IntendantService intendantService;
 
     //登录类型常量
     /**
@@ -59,6 +61,29 @@ public class UserController {
         Teacher teacher = (Teacher)session.getAttribute("user");
         List<GuideTeacher> guideTeacherList = guideTeacherService.getGuideTeacherByAccount(teacher.getAccount());
         List<TopicSelect> topicSelectList = topicSelectService.findByTeacher(teacher.getAccount());
+        ArrayList<TopicUpload> topicUploadList = new ArrayList<TopicUpload>();
+        ArrayList<String> stuAccountList = new ArrayList<String>();
+        for(GuideTeacher stuAccount : guideTeacherList){
+            int tmpCount = topicUploadService.getUploadCountByStudentAccount(stuAccount.getStudentAccount());
+            if (tmpCount > 0){
+                //如果学生没有提交过论文则不添加到显示列表中
+                stuAccountList.add(stuAccount.getStudentAccount());
+            }
+        }
+        for (String student : stuAccountList){
+            topicUploadList.add(topicUploadService.findByTeacher(student).get(0));
+        }
+        model.addAttribute("guideTeacherList", guideTeacherList);
+        model.addAttribute("topicSelectList", topicSelectList);
+        model.addAttribute("topicUploadList",topicUploadList);
+        return "stulist";
+    }
+
+    @RequestMapping("/stulist1")
+    public String stuList1(Model model){
+        //获取所有教师管理的学生的学号姓名以及选题状态
+        List<GuideTeacher> guideTeacherList = guideTeacherService.findAll();
+        List<TopicSelect> topicSelectList = topicSelectService.findAll();
         ArrayList<TopicUpload> topicUploadList = new ArrayList<TopicUpload>();
         ArrayList<String> stuAccountList = new ArrayList<String>();
         for(GuideTeacher stuAccount : guideTeacherList){
@@ -164,6 +189,7 @@ public class UserController {
         }
         Users u;
         Teacher teacher;
+        Intendant intendant;
 
         if (userLogin.getType().equals(TYPESTUDENT)){
             String optionFlag = userService.checkUser(userLogin);
@@ -197,10 +223,21 @@ public class UserController {
                 attr.addFlashAttribute("error","登录失败，用户不存在");
                 return "redirect:/login";
             }
-        }else{
-            attr.addFlashAttribute("error","登录失败");
+        }else if (userLogin.getType().equals(TYPEADMIN)){
+            String optionFlag = intendantService.checkIntendant(userLogin);
+            if ("0".equals(optionFlag)){
+                intendant = intendantService.findByAccount(userLogin.getAccount());
+                session.setAttribute("user",intendant);
+                //跳转到管理员主页
+                return "redirect:/intendantmain";
+            }else if ("1".equals(optionFlag)){
+                attr.addFlashAttribute("error","登录失败，密码错误");
+                return "redirect:/login";
+            }else{
+                attr.addFlashAttribute("error","登录失败，用户不存在");
+                return "redirect:/login";
+            }
         }
-        //TODO 管理员
 
         return "redirect:/login";
     }
@@ -221,6 +258,15 @@ public class UserController {
         List<Notice> noticeList = noticeService.findByGetUserAccount(student.getAccount());
         model.addAttribute("noticeList", noticeList);
         return "stumain";
+    }
+
+    @GetMapping("/intendantmain")
+    public String intendantmain(Model model, HttpSession session){
+        Intendant intendant = (Intendant) session.getAttribute("user");
+        intendant = intendantService.findByAccount(intendant.getAccount());
+        List<Notice> noticeList = noticeService.findByGetUserAccount(intendant.getAccount());
+        model.addAttribute("noticeList", noticeList);
+        return "intendantmain";
     }
 
     @GetMapping("/teacherinfo")
@@ -309,6 +355,36 @@ public class UserController {
         }else {
             attr.addFlashAttribute("fail","修改失败");
             return "redirect:/studentinfo";
+        }
+    }
+
+    @GetMapping("/intendantinfo")
+    public String getIntendantInfo(Model model, HttpSession session){
+        Intendant intendant;
+        intendant = (Intendant)session.getAttribute("user");
+        //如果使用session来显示信息，修改信息后就无法实时显示修改，因此在这里重新查找后再绑定到页面
+        intendant = intendantService.findByAccount(intendant.getAccount());
+        if (!"".equals(intendant.getName())){
+            model.addAttribute("intendant",intendant);
+            return "intendantinfo";
+        }
+        else {
+            return "redirect:/login";
+        }
+    }
+
+    @PostMapping("/intendantinfo")
+    public String alterIntendantInfo(@Valid Intendant intendant, BindingResult result, RedirectAttributes attr){
+        if (result.hasErrors()){
+            attr.addFlashAttribute("fail","信息有误无法修改");
+            return "redirect:/intendantinfo";
+        }
+        if(intendantService.update(intendant).equals("0")){
+            attr.addFlashAttribute("success","修改成功");
+            return "redirect:/intendantinfo";
+        }else {
+            attr.addFlashAttribute("fail","修改失败");
+            return "redirect:/intendantinfo";
         }
     }
 }

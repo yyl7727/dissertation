@@ -7,25 +7,25 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-content">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <div class="mt-4 ml-3">
-                                        <div class="mail-list mt-4">
-                                            <a class="list-group-item border-0 text-danger active" th:href="@{noticecenterstudent}"><i class="mdi mdi-inbox font-18 align-middle mr-2"></i><b>消息中心</b></a>
-                                        </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="mt-4 ml-3">
+                                    <div class="mail-list mt-4">
+                                        <a class="list-group-item border-0 text-danger active" th:href="@{noticecenterintendant}"><i class="mdi mdi-inbox font-18 align-middle mr-2"></i><b>消息中心</b></a>
                                     </div>
                                 </div>
-                                <div class="col-lg-9">
-                                    <div class="">
-                                        <div class="mt-4">
-                                            <div class="trade-history-table">
-                                                <ul class="message-list">
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="">
+                                    <div class="mt-4">
+                                        <div class="trade-history-table">
+                                            <ul class="message-list">
                                                     <span th:each="notice : ${noticeList}">
                                                         <li class="unread" th:if="${notice.status=='0'}">
                                                             <a th:href="@{|/noticereadstudent/${notice.getId()}|}">
@@ -60,8 +60,7 @@
                                                             </a>
                                                         </li>
                                                     </span>
-                                                </ul>
-                                            </div>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -72,12 +71,13 @@
             </div>
         </div>
     </div>
-    <script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
-    <script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
-    <script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/jquery.slimscroll.js}"></script>
-    <script th:src="@{/js/sidebarmenu.js}"></script>
-    <script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
-    <script th:src="@{/js/custom.min.js}"></script>
+</div>
+<script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.slimscroll.js}"></script>
+<script th:src="@{/js/sidebarmenu.js}"></script>
+<script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+<script th:src="@{/js/custom.min.js}"></script>
 </body>
 </html>

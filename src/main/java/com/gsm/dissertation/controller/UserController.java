@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gsm.dissertation.model.*;
 import com.gsm.dissertation.service.*;
+import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -99,7 +100,7 @@ public class UserController {
         model.addAttribute("guideTeacherList", guideTeacherList);
         model.addAttribute("topicSelectList", topicSelectList);
         model.addAttribute("topicUploadList",topicUploadList);
-        return "stulist";
+        return "stulist1";
     }
 
     @GetMapping("/regist")
@@ -126,31 +127,15 @@ public class UserController {
         }
     }
 
-    @GetMapping("/deleteuser/{uid}")
-    public String delete(@PathVariable("uid") Integer uid){
-        userService.deleteById(uid);
-        return "redirect:/listusers";
-    }
-
-
-    /**
-     * 批量删除用户
-     * 目前存在问题删除后不能刷新页面
-     * 等待以后解决问题
-     * @param uids
-     * @return
-     */
-    @PostMapping("/deleteusers")
-    public String deletes(@RequestBody String uids){
-        List<Users> usersList = new ArrayList<>();
-        JSONObject jsonObject = JSONObject.parseObject(uids);
-        JSONArray jsonArray = jsonObject.getJSONArray("uids");//前端传递时使用uids作为json的键
-        int ilen = jsonArray.size();
-        for (int i = 0; i < ilen; i++){
-            usersList.add(userService.findById(jsonArray.getInteger(i)));
+    @GetMapping("/userdelete/{account}")
+    public String delete(@PathVariable("account") String account, RedirectAttributes attr){
+        String optionFlag = userService.deleteByAccount(account);
+        if ("0".equals(optionFlag)) {
+            return "redirect:/stumanage";
+        }else {
+            attr.addFlashAttribute("error","删除失败"+optionFlag);
+            return "redirect:/stumanage";
         }
-        userService.deletes(usersList);
-        return "redirect:/listusers";
     }
 
     /**
@@ -386,5 +371,12 @@ public class UserController {
             attr.addFlashAttribute("fail","修改失败");
             return "redirect:/intendantinfo";
         }
+    }
+
+    @GetMapping("stumanage")
+    public String stuManage(Model model){
+        ArrayList<Users> usersArrayList = (ArrayList<Users>) userService.findAll();
+        model.addAttribute("usersList",usersArrayList);
+        return "stumanage";
     }
 }

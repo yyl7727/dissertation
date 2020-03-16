@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息相关</title>
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon.png}">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+<div class="row" th:unless="${#strings.isEmpty(message)}">
+    <p class="alert" th:text="${message}"></p>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-title">
+                <h4>学生列表</h4>
+            </div>
+            <div class="card-body">
+                <div class="trade-history-table">
+                    <div class="table-responsive">
+                        <table class="table table-xs">
+                            <thead>
+                            <tr>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>论题</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="guideTeacher: ${guideTeacherList}">
+                                <!-- 以选题学生用绿色显示class：text-success，未选题用红色显示class：text-danger -->
+                                <td class="text-success" th:text="${guideTeacher.getStudentAccount()}"></td>
+                                <td class="text-success" th:text="${guideTeacher.getStudentName()}"></td>
+                                <td class="text-success" th:text="${guideTeacher.getTopicName()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-title">
+                <h4>待审批列表</h4></div>
+            <div class="card-body">
+                <div class="trade-history-table">
+                    <div class="table-responsive">
+                        <table class="table table-de mb-0">
+                            <thead>
+                            <tr>
+                                <th>申请日期</th>
+                                <th>论题名称</th>
+                                <th>学生姓名</th>
+                                <th>指导教师</th>
+                                <th>审批状态</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="topicSelect: ${topicSelectList}">
+                                <td th:text="${topicSelect.getApplyTime()}"></td>
+                                <td th:text="${topicSelect.getTopicName()}"></td>
+                                <td th:text="${topicSelect.getStudentName()}"></td>
+                                <td th:text="${topicSelect.getTeacherName()}"></td>
+                                <td th:text="未审批"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-xl-12">
+        <div class="card">
+            <div class="card-title">
+                <h4>学生论文状态</h4>
+            </div>
+            <div class="card-body">
+                <div class="trade-history-table">
+                    <div class="table-responsive">
+                        <table class="table table-de mb-0">
+                            <thead>
+                            <tr>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>论文提交次数</th>
+                                <th>下载论文</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="topicUpload: ${topicUploadList}">
+                                <td th:text="${topicUpload.getStudentAccount()}"></td>
+                                <td th:text="${topicUpload.getStudentName()}"></td>
+                                <td th:text="${'第'+topicUpload.getUploadTime()+'次'}"></td>
+                                <td><a class="btn btn-sm round btn-outline-success" th:href="@{|/topicDownload/${topicUpload.getId()}|}">下载</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script th:src="@{/js/lib/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/popper.min.js}"></script>
+<script th:src="@{/js/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.slimscroll.js}"></script>
+<script th:src="@{/js/sidebarmenu.js}"></script>
+<script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
+<script th:src="@{/js/lib/webticker/jquery.webticker.min.js}"></script>
+<script th:src="@{/js/lib/peitychart/jquery.peity.min.js}"></script>
+<script th:src="@{/js/custom.min.js}"></script>
+<script th:src="@{/js/dashboard-1.js}"></script>
+</body>
+</html>

@@ -43,13 +43,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label>密码</label>
-                                        <input type="password" class="form-control" placeholder="请输入密码">
+                                        <input type="password" id="pwd" class="form-control" placeholder="请输入密码">
                                     </div>
                                     <div class="form-group">
                                         <label>重复密码</label>
-                                        <input type="password" class="form-control" th:field="*{password}" placeholder="请输入密码">
+                                        <input type="password" id="pwd1" class="form-control" th:field="*{password}" placeholder="请输入密码">
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">注册</button>
+                                    <button id="sub" type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">注册</button>
                                     <div class="register-link m-t-15 text-center">
                                         <p>已有账号 <a th:href="@{login}">现在登录</a></p>
                                     </div>
@@ -74,5 +74,21 @@
     <script th:src="@{/js/sidebarmenu.js}"></script>
     <script th:src="@{/js/lib/sticky-kit-master/dist/sticky-kit.min.js}"></script>
     <script th:src="@{/js/custom.min.js}"></script>
+    <script>
+        $(function(){
+
+            $("#sub").click(function(){
+
+                var pwd = $("#pwd").val();
+                var cpwd = $("#pwd1").val();
+                if(pwd != cpwd){
+                    alert("两次密码不一致!");
+                    $("#pwd").val("");
+                    $("#pwd1").val("");
+                    return false;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

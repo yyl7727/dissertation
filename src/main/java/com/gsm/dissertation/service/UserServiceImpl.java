@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +32,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<Users> findAll(String kw, Pageable pageable) {
-        return userRepository.findByKeyword(kw, pageable);
+    public List<Users> findAll() {
+
+        return userRepository.findAll();
     }
 
     @Override
@@ -42,20 +43,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Users users) {
-        userRepository.delete(users);
-    }
-
-    @Override
-    public void deleteById(Integer uid) {
-        userRepository.deleteById(uid);
-    }
-
-    @Override
     @Transactional
-    public void deletes(List<Users> usersList) {
-        for(Users user : usersList){
-            userRepository.delete(user);
+    public String deleteByAccount(String account) {
+        try {
+            userRepository.deleteByAccount(account);
+            return "0";
+        }catch (Exception ex){
+            return "删除失败,错误原因:" + ex.getMessage();
         }
     }
 

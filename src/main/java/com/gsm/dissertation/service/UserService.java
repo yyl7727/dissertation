@@ -12,15 +12,11 @@ public interface UserService {
 
     void save(Users users) throws Exception;
 
-    Page<Users> findAll(String kw, Pageable pageable);
+    List<Users> findAll();
 
     Users findById(Integer uid);
 
-    void delete(Users users);
-
-    void deleteById(Integer uid);
-
-    void deletes(List<Users> usersList);
+    String deleteByAccount(String account);
 
     String checkUser(UserLogin userLogin);
 

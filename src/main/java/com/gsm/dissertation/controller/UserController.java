@@ -379,4 +379,12 @@ public class UserController {
         model.addAttribute("usersList",usersArrayList);
         return "stumanage";
     }
+
+    @RequestMapping("/stuadd")
+    public String stuadd(Model model){
+        Users student = new Users();
+
+        model.addAttribute("student",student);
+        return "addstudent";
+    }
 }

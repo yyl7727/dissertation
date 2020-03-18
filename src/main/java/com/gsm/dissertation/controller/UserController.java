@@ -118,9 +118,14 @@ public class UserController {
             if (result.hasErrors()){
                 return "redirect:/regist";
             }
-            userService.save(user);
-            attr.addFlashAttribute("ok","注册成功，马上登陆试试呢~");
-            return "redirect:/login";
+            String optionFlag = userService.save(user);
+            if("0".equals(optionFlag)){
+                attr.addFlashAttribute("ok","注册成功，马上登陆试试呢~");
+                return "redirect:/login";
+            }else {
+                attr.addFlashAttribute("error",optionFlag);
+                return "redirect:/login";
+            }
         }catch (Exception ex){
             attr.addFlashAttribute("error","保存失败" + ex.toString());
             return "redirect:/regist";
@@ -380,11 +385,36 @@ public class UserController {
         return "stumanage";
     }
 
-    @RequestMapping("/stuadd")
+    @GetMapping("/stuadd")
     public String stuadd(Model model){
         Users student = new Users();
-
+        ArrayList<Parameter> list_ParameterMajor = (ArrayList) parameterService.getParameterByType("0004");
         model.addAttribute("student",student);
+        model.addAttribute("major",list_ParameterMajor);
         return "addstudent";
+    }
+
+    @PostMapping("/stuadd")
+    public String addStudent(@Valid Users student,BindingResult result, Model model, RedirectAttributes attr){
+        if (result.hasErrors()){
+            attr.addFlashAttribute("fail","请检查各项是否填写或填写是否有误");
+            return "redirect:/stuadd";
+        }
+        Users tmpUser = userService.findUsersByAccount(student.getAccount());
+        if (tmpUser==null){
+            //管理员添加的学生默认密码为123
+            student.setPassword("123");
+            String optionFlag = userService.save(student);
+            if("0".equals(optionFlag)){
+                attr.addFlashAttribute("success","添加成功");
+                return "redirect:/stuadd";
+            }else{
+                attr.addFlashAttribute("fail","添加失败,错误信息:"+optionFlag);
+                return "redirect:/stuadd";
+            }
+        }else {
+            attr.addFlashAttribute("fail","添加失败,学号重复");
+            return "redirect:/stuadd";
+        }
     }
 }

@@ -23,11 +23,12 @@ public class UserServiceImpl implements UserService {
     private TeacherRepository teacherRepository;
 
     @Override
-    public void save(Users users) throws Exception {
+    public String save(Users users){
         try {
             userRepository.save(users);
+            return "0";
         }catch (Exception ex){
-            throw ex;
+            return "保存失败,错误信息:" + ex.getMessage();
         }
     }
 
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public String checkUser(UserLogin userLogin) {
-        Users u = null;
+        Users u = new Users();
         Optional<Users> ou = userRepository.findStuByAccount(userLogin.getAccount());
         if (ou.isPresent()){
             u = ou.get();
@@ -77,8 +78,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Users findUsersByAccount(String account) {
         try {
-            Users student = userRepository.findStuByAccount(account).get();
-            return student;
+            return userRepository.findStuByAccount(account).get();
         }catch (Exception ex){
             return new Users();
         }

@@ -14,14 +14,14 @@
             <h4 class="m-b-0 text-white">添加学生</h4>
         </div>
         <div>
-            <form th:action="@{/studentinfo}" method="post" th:object="${student}" style="align-content: center">
+            <form th:action="@{/stuadd}" method="post" th:object="${student}" style="align-content: center">
                 <div>
                     <input type="hidden" th:field="*{uid}">
                     <input type="hidden" th:field="*{password}">
                     <hr>
                     <div class="form-group">
                         <label>学号</label>
-                        <input type="text" class="form-control" th:field="*{account}"  placeholder="请输入姓名">
+                        <input type="text" class="form-control" th:field="*{account}"  placeholder="请输入学号">
                     </div>
                     <div class="form-group">
                         <label>姓名</label>
@@ -29,7 +29,10 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">性别</label>
-                        <input type="text" id="Gender" class="form-control" th:field="*{grander}"}>
+                        <select class="form-control" th:field="*{grander}">
+                            <option th:value="男" th:text="男"></option>
+                            <option th:value="女" th:text="女"></option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label class="control-label">专业</label>

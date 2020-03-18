@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void save(Users users) throws Exception;
+    String save(Users users);
 
     List<Users> findAll();
 

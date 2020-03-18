@@ -6,6 +6,9 @@ import com.gsm.dissertation.model.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,7 +18,12 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher findTeacherByAccount(String account) {
-        Teacher teacher = teacherRepository.findTechByAccount(account).get();
+        Teacher teacher;
+        try {
+            teacher = teacherRepository.findTechByAccount(account).get();
+        }catch (Exception ex){
+            teacher = new Teacher();
+        }
         return teacher;
     }
 
@@ -47,6 +55,38 @@ public class TeacherServiceImpl implements TeacherService {
             return "0";
         }catch (Exception ex){
             return "保存失败，错误信息:"+ex.getMessage();
+        }
+    }
+
+    @Override
+    public List<Teacher> findAll() {
+        List<Teacher> teacherList = new ArrayList<>();
+        try {
+            teacherList = teacherRepository.findAll();
+        }catch (Exception ex){
+
+        }
+        return teacherList;
+    }
+
+    @Override
+    @Transactional
+    public String deleteTeacherByAccount(String account) {
+        try {
+            teacherRepository.deleteTeacherByAccount(account);
+            return "0";
+        }catch (Exception ex){
+            return "删除失败,错误信息:" + ex.getMessage();
+        }
+    }
+
+    @Override
+    public String save(Teacher teacher) {
+        try {
+            teacherRepository.save(teacher);
+            return "0";
+        }catch (Exception ex){
+            return "添加失败,错误信息:" + ex.getMessage();
         }
     }
 }

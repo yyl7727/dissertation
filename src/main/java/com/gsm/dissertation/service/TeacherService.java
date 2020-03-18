@@ -3,6 +3,8 @@ package com.gsm.dissertation.service;
 import com.gsm.dissertation.model.Teacher;
 import com.gsm.dissertation.model.UserLogin;
 
+import java.util.List;
+
 public interface TeacherService {
 
     Teacher findTeacherByAccount(String account);
@@ -14,4 +16,10 @@ public interface TeacherService {
      * @return 是否成功
      */
     String update(Teacher teacher);
+
+    List<Teacher> findAll();
+
+    String deleteTeacherByAccount(String account);
+
+    String save(Teacher teacher);
 }

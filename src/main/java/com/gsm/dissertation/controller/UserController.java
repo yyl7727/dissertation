@@ -143,6 +143,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("/teacherdelete/{account}")
+    public String teacherDelete(@PathVariable("account") String account, RedirectAttributes attr){
+        String optionFlag = teacherService.deleteTeacherByAccount(account);
+        if ("0".equals(optionFlag)) {
+            return "redirect:/teachermanage";
+        }else {
+            attr.addFlashAttribute("error","删除失败"+optionFlag);
+            return "redirect:/teachermanage";
+        }
+    }
+
     /**
      * 修改用户状态
      * @param uid 修改用户的id
@@ -414,6 +425,48 @@ public class UserController {
             }
         }else {
             attr.addFlashAttribute("fail","添加失败,学号重复");
+            return "redirect:/stuadd";
+        }
+    }
+
+    @GetMapping("teachermanage")
+    public String teacherManage(Model model){
+        ArrayList<Teacher> usersArrayList = (ArrayList<Teacher>) teacherService.findAll();
+        model.addAttribute("teacherList",usersArrayList);
+        return "teachermanage";
+    }
+
+    @GetMapping("/teacheradd")
+    public String teacherAdd(Model model){
+        Teacher teacher = new Teacher();
+        List<Parameter> list_ParameterTitles = parameterService.getParameterByType("0002");
+        List<Parameter> list_ParameterEducation = parameterService.getParameterByType("0003");
+        model.addAttribute("teacher",teacher);
+        model.addAttribute("titleList", list_ParameterTitles);
+        model.addAttribute("educationList",list_ParameterEducation);
+        return "addteacher";
+    }
+
+    @PostMapping("/teacheradd")
+    public String addTeacher(@Valid Teacher teacher,BindingResult result, Model model, RedirectAttributes attr){
+        if (result.hasErrors()){
+            attr.addFlashAttribute("fail","请检查各项是否填写或填写是否有误");
+            return "redirect:/stuadd";
+        }
+        Teacher tmpTeacher = teacherService.findTeacherByAccount(teacher.getAccount());
+        if (tmpTeacher.getAccount()==null){
+            //管理员添加的学生默认密码为123
+            teacher.setPassword("123");
+            String optionFlag = teacherService.save(teacher);
+            if("0".equals(optionFlag)){
+                attr.addFlashAttribute("success","添加成功");
+                return "redirect:/stuadd";
+            }else{
+                attr.addFlashAttribute("fail","添加失败,错误信息:"+optionFlag);
+                return "redirect:/stuadd";
+            }
+        }else {
+            attr.addFlashAttribute("fail","添加失败,工号重复");
             return "redirect:/stuadd";
         }
     }

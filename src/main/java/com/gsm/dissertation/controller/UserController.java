@@ -401,7 +401,7 @@ public class UserController {
             return "redirect:/stuadd";
         }
         Users tmpUser = userService.findUsersByAccount(student.getAccount());
-        if (tmpUser==null){
+        if (tmpUser.getAccount()==null){
             //管理员添加的学生默认密码为123
             student.setPassword("123");
             String optionFlag = userService.save(student);

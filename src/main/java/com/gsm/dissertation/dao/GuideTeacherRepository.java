@@ -11,7 +11,7 @@ public interface GuideTeacherRepository extends JpaRepository<GuideTeacher,Integ
     /**
      * 根据教师账号获取对应指导教师下的所有学生
      * @param account 教师账号
-     * @return 对应指导教师下的所有学生
+     * @return 对应指导教师下的所有学生1
      */
     @Query("select g from GuideTeacher g where g.teacherAccount=?1")
     List<GuideTeacher> getGuideTeacherByAccount(String account);

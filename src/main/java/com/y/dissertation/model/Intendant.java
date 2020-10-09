@@ -3,6 +3,9 @@ package com.y.dissertation.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+/**
+ * 管理员实体类
+ */
 @Entity
 @Table(name = "intendant")
 public class Intendant {
